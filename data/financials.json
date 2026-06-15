@@ -1,0 +1,667 @@
+{
+"TCS": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 94648.0,
+"netProfit": 20060.0,
+"eps": 50.68,
+"cfo": 19369.0
+},
+"2016": {
+"revenue": 108646.0,
+"netProfit": 24338.0,
+"eps": 61.58,
+"cfo": 19109.0
+}
+},
+"INFY": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 53319.0,
+"netProfit": 12372.0,
+"eps": 26.93,
+"cfo": 8353.0
+},
+"2016": {
+"revenue": 62441.0,
+"netProfit": 13489.0,
+"eps": 29.36,
+"cfo": 10028.0
+}
+},
+"HCLTECH": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 36701.0,
+"netProfit": 7342.0,
+"eps": 26.02,
+"cfo": 5539.0
+},
+"2016": {
+"revenue": 31136.0,
+"netProfit": 5602.0,
+"eps": 19.86,
+"cfo": 3823.0
+}
+},
+"WIPRO": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 46951.0,
+"netProfit": 8714.0,
+"eps": 6.58,
+"cfo": 7840.0
+},
+"2016": {
+"revenue": 51244.0,
+"netProfit": 8957.0,
+"eps": 6.76,
+"cfo": 7887.0
+}
+},
+"HDFCBANK": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 50666.0,
+"netProfit": 10703.0,
+"eps": 10.66,
+"cfo": -21281.0
+},
+"2016": {
+"revenue": 63162.0,
+"netProfit": 12821.0,
+"eps": 12.66,
+"cfo": -34435.0
+}
+},
+"ICICIBANK": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 54964.0,
+"netProfit": 12942.0,
+"eps": 19.2,
+"cfo": -12273.0
+},
+"2016": {
+"revenue": 59294.0,
+"netProfit": 10927.0,
+"eps": 15.92,
+"cfo": 23645.0
+}
+},
+"KOTAKBANK": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 13319.0,
+"netProfit": 3105.0,
+"eps": 3.94,
+"cfo": 2302.0
+},
+"2016": {
+"revenue": 20402.0,
+"netProfit": 3524.0,
+"eps": 3.77,
+"cfo": 5025.0
+}
+},
+"SBIN": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 207974.0,
+"netProfit": 17832.0,
+"eps": 22.76,
+"cfo": 26297.0
+},
+"2016": {
+"revenue": 220633.0,
+"netProfit": 13019.0,
+"eps": 15.75,
+"cfo": 14477.0
+}
+},
+"AXISBANK": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 35727.0,
+"netProfit": 7450.0,
+"eps": 31.42,
+"cfo": -15162.0
+},
+"2016": {
+"revenue": 41409.0,
+"netProfit": 8358.0,
+"eps": 35.04,
+"cfo": -34495.0
+}
+},
+"HINDUNILVR": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 31972.0,
+"netProfit": 4376.0,
+"eps": 20.17,
+"cfo": 3292.0
+},
+"2016": {
+"revenue": 32186.0,
+"netProfit": 4151.0,
+"eps": 19.18,
+"cfo": 4171.0
+}
+},
+"ITC": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 38817.0,
+"netProfit": 9779.0,
+"eps": 8.04,
+"cfo": 9843.0
+},
+"2016": {
+"revenue": 39192.0,
+"netProfit": 9501.0,
+"eps": 7.74,
+"cfo": 9799.0
+}
+},
+"NESTLEIND": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 8175.0,
+"netProfit": 563.0,
+"eps": 2.92,
+"cfo": 1098.0
+},
+"2016": {
+"revenue": 9141.0,
+"netProfit": 1001.0,
+"eps": 5.19,
+"cfo": 1466.0
+}
+},
+"BRITANNIA": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 7858.0,
+"netProfit": 689.0,
+"eps": 28.71,
+"cfo": 584.0
+},
+"2016": {
+"revenue": 8397.0,
+"netProfit": 825.0,
+"eps": 34.36,
+"cfo": 959.0
+}
+},
+"DABUR": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 7795.0,
+"netProfit": 1068.0,
+"eps": 6.07,
+"cfo": 1047.0
+},
+"2016": {
+"revenue": 7780.0,
+"netProfit": 1254.0,
+"eps": 7.11,
+"cfo": 1187.0
+}
+},
+"SUNPHARMA": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 27392.0,
+"netProfit": 5476.0,
+"eps": 21.92,
+"cfo": 5616.0
+},
+"2016": {
+"revenue": 28487.0,
+"netProfit": 5658.0,
+"eps": 18.89,
+"cfo": 6686.0
+}
+},
+"DRREDDY": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 15023.0,
+"netProfit": 2336.0,
+"eps": 27.43,
+"cfo": 2524.0
+},
+"2016": {
+"revenue": 15568.0,
+"netProfit": 2131.0,
+"eps": 24.98,
+"cfo": 3263.0
+}
+},
+"CIPLA": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 11345.0,
+"netProfit": 1229.0,
+"eps": 14.71,
+"cfo": 1173.0
+},
+"2016": {
+"revenue": 13790.0,
+"netProfit": 1383.0,
+"eps": 16.93,
+"cfo": 1741.0
+}
+},
+"DIVISLAB": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 3115.0,
+"netProfit": 852.0,
+"eps": 32.07,
+"cfo": 826.0
+},
+"2016": {
+"revenue": 3776.0,
+"netProfit": 1126.0,
+"eps": 42.41,
+"cfo": 1038.0
+}
+},
+"MARUTI": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 50801.0,
+"netProfit": 3809.0,
+"eps": 126.04,
+"cfo": 6449.0
+},
+"2016": {
+"revenue": 57589.0,
+"netProfit": 5497.0,
+"eps": 181.98,
+"cfo": 8482.0
+}
+},
+"TATAMOTORS": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 263159.0,
+"netProfit": 14073.0,
+"eps": 48.44,
+"cfo": 35531.0
+},
+"2016": {
+"revenue": 273046.0,
+"netProfit": 11678.0,
+"eps": 40.11,
+"cfo": 37900.0
+}
+},
+"MM": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 71448.0,
+"netProfit": 3381.0,
+"eps": 25.26,
+"cfo": 1055.0
+},
+"2016": {
+"revenue": 75841.0,
+"netProfit": 3554.0,
+"eps": 25.35,
+"cfo": 2385.0
+}
+},
+"BAJAJAUTO": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 21595.0,
+"netProfit": 3026.0,
+"eps": 104.56,
+"cfo": 2114.0
+},
+"2016": {
+"revenue": 22574.0,
+"netProfit": 4061.0,
+"eps": 140.35,
+"cfo": 3690.0
+}
+},
+"LT": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 91929.0,
+"netProfit": 4966.0,
+"eps": 34.17,
+"cfo": -1365.0
+},
+"2016": {
+"revenue": 101122.0,
+"netProfit": 4592.0,
+"eps": 30.64,
+"cfo": -3240.0
+}
+},
+"ULTRACEMCO": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 23306.0,
+"netProfit": 2102.0,
+"eps": 76.47,
+"cfo": 4190.0
+},
+"2016": {
+"revenue": 25153.0,
+"netProfit": 2480.0,
+"eps": 90.3,
+"cfo": 4526.0
+}
+},
+"ASIANPAINT": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 13615.0,
+"netProfit": 1427.0,
+"eps": 14.54,
+"cfo": 1188.0
+},
+"2016": {
+"revenue": 14271.0,
+"netProfit": 1803.0,
+"eps": 18.19,
+"cfo": 2243.0
+}
+},
+"TITAN": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 11913.0,
+"netProfit": 816.0,
+"eps": 9.19,
+"cfo": 503.0
+},
+"2016": {
+"revenue": 11276.0,
+"netProfit": 675.0,
+"eps": 7.6,
+"cfo": 576.0
+}
+},
+"PIDILITIND": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 4844.0,
+"netProfit": 514.0,
+"eps": 5.0,
+"cfo": 552.0
+},
+"2016": {
+"revenue": 5361.0,
+"netProfit": 807.0,
+"eps": 7.83,
+"cfo": 907.0
+}
+},
+"BAJFINANCE": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 5392.0,
+"netProfit": 898.0,
+"eps": 1.79,
+"cfo": -7064.0
+},
+"2016": {
+"revenue": 7299.0,
+"netProfit": 1279.0,
+"eps": 2.37,
+"cfo": -9870.0
+}
+},
+"POWERGRID": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 17540.0,
+"netProfit": 5046.0,
+"eps": 5.43,
+"cfo": 15800.0
+},
+"2016": {
+"revenue": 20652.0,
+"netProfit": 5959.0,
+"eps": 6.41,
+"cfo": 15008.0
+}
+},
+"NTPC": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 79957.0,
+"netProfit": 9992.0,
+"eps": 10.09,
+"cfo": 14889.0
+},
+"2016": {
+"revenue": 73396.0,
+"netProfit": 10781.0,
+"eps": 10.92,
+"cfo": 24125.0
+}
+},
+"COALINDIA": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 74120.0,
+"netProfit": 13727.0,
+"eps": 21.73,
+"cfo": 14382.0
+},
+"2016": {
+"revenue": 77861.0,
+"netProfit": 14267.0,
+"eps": 22.59,
+"cfo": 13154.0
+}
+},
+"IOC": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 449507.0,
+"netProfit": 4872.0,
+"eps": 3.37,
+"cfo": 46092.0
+},
+"2016": {
+"revenue": 346045.0,
+"netProfit": 12413.0,
+"eps": 8.25,
+"cfo": 25624.0
+}
+},
+"TATASTEEL": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 139504.0,
+"netProfit": -3939.0,
+"eps": -3.48,
+"cfo": 11880.0
+},
+"2016": {
+"revenue": 101965.0,
+"netProfit": -497.0,
+"eps": -0.34,
+"cfo": 11455.0
+}
+},
+"HINDALCO": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 104281.0,
+"netProfit": 259.0,
+"eps": 4.14,
+"cfo": 7143.0
+},
+"2016": {
+"revenue": 98759.0,
+"netProfit": -702.0,
+"eps": -1.21,
+"cfo": 11688.0
+}
+},
+"BHARTIARTL": {
+"2010": null,
+"2011": null,
+"2012": null,
+"2013": null,
+"2014": null,
+"2015": {
+"revenue": 96101.0,
+"netProfit": 5048.0,
+"eps": 8.41,
+"cfo": 28059.0
+},
+"2016": {
+"revenue": 96532.0,
+"netProfit": 6893.0,
+"eps": 11.05,
+"cfo": 27942.0
+}
+}
+}

@@ -1,65 +1,76 @@
-import Image from "next/image";
+import Link from "next/link";
+import Header from "./components/Header";
+import { STOCKS } from "@/lib/stocks";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <>
+      <Header />
+      <main className="mx-auto max-w-6xl px-4 py-10">
+        <section className="mb-10">
+          <span className="inline-block rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-800">
+            Fixed window · Jan 2000 – June 2026 · reproducible
+          </span>
+          <h1 className="mt-4 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            A financial-literacy time capsule of {STOCKS.length} NSE stocks
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-3 max-w-2xl text-gray-600">
+            Step back to <strong>June 2016</strong>, study {STOCKS.length} of
+            India&apos;s biggest companies as they looked then, build a portfolio
+            for a real-life scenario, and fast-forward a decade to June 2026 to
+            see how it played out — all on a fixed, reproducible dataset.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        </section>
+
+        <div className="grid gap-5 sm:grid-cols-2">
+          <Link
+            href="/screener"
+            className="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-[var(--color-brand)] hover:shadow-md"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]">
+              Part 1 · Public
+            </div>
+            <h2 className="text-xl font-bold text-gray-900">Screener Clone</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              A screener.in-style company page for each stock, frozen at June
+              2016: snapshot ratios, year-by-year financials, a Jan 2000–June
+              2016 price chart, and peer comparison. Nothing beyond June 2016 —
+              participants get a genuine &ldquo;track record&rdquo; view before
+              they pick.
+            </p>
+            <span className="mt-4 inline-block text-sm font-semibold text-[var(--color-brand)] group-hover:underline">
+              Browse all {STOCKS.length} stocks →
+            </span>
+          </Link>
+
+          <Link
+            href="/simulator"
+            className="group rounded-xl border border-gray-200 bg-white p-6 shadow-sm transition hover:border-[var(--color-brand)] hover:shadow-md"
           >
-            Documentation
-          </a>
+            <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              Part 2 · Host only 🔒
+            </div>
+            <h2 className="text-xl font-bold text-gray-900">
+              Portfolio Simulator
+            </h2>
+            <p className="mt-2 text-sm text-gray-600">
+              Password-protected host tool. Pick a life scenario, enter a
+              team&apos;s 8-stock portfolio, and reveal indexed performance over
+              June 2016–June 2026 with a Nifty 50 overlay, a 1–10 rating, and a
+              per-holding breakdown.
+            </p>
+            <span className="mt-4 inline-block text-sm font-semibold text-gray-700 group-hover:underline">
+              Enter the simulator →
+            </span>
+          </Link>
         </div>
+
+        <p className="mt-8 text-xs text-gray-500">
+          All prices are split/bonus-adjusted and the entire dataset is pinned to
+          a fixed June-2026 reference date, so results never change with the
+          calendar. See the data coverage notes in the project README.
+        </p>
       </main>
-    </div>
+    </>
   );
 }
