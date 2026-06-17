@@ -38,8 +38,8 @@ export interface HoldingResult {
 
 export interface TimelinePoint {
   date: string;
-  portfolio: number; // indexed to 100 at June 2016
-  nifty: number | null; // indexed to 100 at June 2016
+  portfolio: number; // indexed to 100 at June 2021
+  nifty: number | null; // indexed to 100 at June 2021
 }
 
 export interface PortfolioResult {
@@ -51,7 +51,7 @@ export interface PortfolioResult {
   rating: number; // 1–10
 }
 
-// Canonical monthly grid June 2016 – June 2026 (all 35 stocks share it).
+// Canonical monthly grid June 2021 – June 2026 (all 35 stocks share it).
 function monthGrid(): string[] {
   const ref = getSimPrices("TCS");
   return ref.map((p) => p.date);
@@ -63,7 +63,7 @@ function priceMap(id: string): Map<string, number> {
   return m;
 }
 
-// Rating 1–10 from total % return over June 2016 – June 2026.
+// Rating 1–10 from total % return over June 2021 – June 2026.
 // Bands (spec): <0 ->1-2, 0-50 ->3-4, 50-100 ->5-6, 100-200 ->7-8, >200 ->9-10.
 export function ratingFromReturn(r: number): number {
   const bands: [number, number, number, number][] = [
@@ -119,9 +119,18 @@ export function computePortfolio(holdings: Holding[]): PortfolioResult {
 
   const totalReturn = entryValue > 0 ? (exitValue / entryValue - 1) * 100 : 0;
 
-  // Timeline: portfolio value at each month, indexed to 100 at June 2016.
+  // Timeline: portfolio value at each month, indexed to 100 at the anchor.
   const grid = monthGrid();
   const maps = new Map(clean.map((h) => [h.id, priceMap(h.id)]));
+  // For stocks listed after the anchor (PAYTM), back-fill pre-listing months
+  // flat at the first available (listing) price so the index has no artificial
+  // jump and the base value matches the per-holding entry value.
+  const firstClose = new Map(
+    clean.map((h) => {
+      const sim = getSimPrices(h.id);
+      return [h.id, sim.length ? sim[0].close : null];
+    }),
+  );
   const niftyMap = new Map(getNiftySim().map((p) => [p.date, p.close]));
   const nifty0 = niftyMap.get(ANCHOR_MONTH) ?? null;
 
@@ -130,7 +139,7 @@ export function computePortfolio(holdings: Holding[]): PortfolioResult {
   for (const date of grid) {
     let val = 0;
     for (const h of clean) {
-      const price = maps.get(h.id)!.get(date);
+      const price = maps.get(h.id)!.get(date) ?? firstClose.get(h.id) ?? null;
       if (price != null) val += price * h.qty;
     }
     if (date === ANCHOR_MONTH) base = val;

@@ -11,7 +11,7 @@ export default function Header() {
           NSE Time Capsule
         </Link>
         <span className="hidden rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 sm:inline">
-          as of June 2016
+          as of June 2021
         </span>
         <nav className="ml-auto flex items-center gap-1 text-sm">
           <Link

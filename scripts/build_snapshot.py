@@ -1,18 +1,20 @@
 """Combine screener_raw.json + prices.json into the app's data files.
 
+Window anchored to JUNE 2021 (5-year exercise: June 2021 -> June 2026).
+
 Outputs:
-  data/financials.json   id -> { "2010".."2016": {revenue,netProfit,eps,cfo} | null }
-  data/snapshot-2016.json id -> { price, marketCap, marketCapCategory, pe,
-                                  divYield, roe, de, promoterHolding,
-                                  promoterHoldingAsOf, opm, grossMargin, ... }
+  data/financials.json    id -> { "2015".."2021": {revenue,netProfit,eps,cfo} | null }
+  data/snapshot-2021.json id -> { price, marketCap, marketCapCategory, pe,
+                                  divYield, roe, de, promoterHolding, opm,
+                                  ipoMonth, effectiveEntry, ... }
   data/missing-data-report.md
 
-Consistency note: screener historical EPS is bonus/split-adjusted to the current
-share base, which matches yfinance's split-adjusted June-2016 close. So
-  PE      = adjClose(2016-06) / EPS(FY2016)
-  MktCap  = PE * NetProfit(FY2016)          [= price*shares, basis-independent]
-  DivYield= (payout% * EPS / 100) / adjClose(2016-06)
-are all internally consistent using only these two real sources.
+Consistency: screener historical EPS is bonus/split-adjusted to the current
+share base, matching yfinance's split-adjusted June-2021 close, so
+  PE      = adjClose(2021-06) / EPS(FY2021)
+  MktCap  = PE * NetProfit(FY2021)
+  DivYield= (payout% * EPS / 100) / adjClose(2021-06)
+are internally consistent. ROE/D/E use FY2021 balance-sheet aggregates.
 """
 import json, os
 from stocks import STOCKS
@@ -23,14 +25,21 @@ DATA = os.path.join(ROOT, "data")
 prices = json.load(open(os.path.join(DATA, "prices.json")))
 raw = json.load(open(os.path.join(DATA, "screener_raw.json")))
 
-YEARS = ["2010", "2011", "2012", "2013", "2014", "2015", "2016"]
+ANCHOR = "2021-06"
+FY = "2021"
+YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021"]
 
 
-def june2016_close(sid):
+def price_at(sid, month):
     for p in prices.get(sid, []):
-        if p["date"] == "2016-06":
+        if p["date"] == month:
             return p["close"]
     return None
+
+
+def first_price(sid):
+    arr = prices.get(sid, [])
+    return (arr[0]["date"], arr[0]["close"]) if arr else (None, None)
 
 
 def cap_category(mktcap_cr):
@@ -43,15 +52,9 @@ def cap_category(mktcap_cr):
     return "Small"
 
 
-def cagr(start, end, years):
-    if start is None or end is None or start <= 0 or end <= 0:
-        return None
-    return round(((end / start) ** (1 / years) - 1) * 100, 1)
-
-
 financials = {}
 snapshot = {}
-gaps = []  # (sid, field, note)
+gaps = []
 
 for sid, yahoo, name, sector in STOCKS:
     r = raw.get(sid, {})
@@ -66,7 +69,7 @@ for sid, yahoo, name, sector in STOCKS:
     reserves = r.get("reserves", {})
     promoters = r.get("promoters", {})
 
-    # ---- year-by-year financials table ----
+    # ---- year-by-year financials table (FY2015-FY2021) ----
     fin = {}
     for y in YEARS:
         if y in np_ or y in sales or y in eps or y in cfo:
@@ -78,46 +81,59 @@ for sid, yahoo, name, sector in STOCKS:
             }
         else:
             fin[y] = None
-            gaps.append((sid, f"FY{y}", "no annual data (screener window starts FY2015)"))
+            gaps.append((sid, f"FY{y}", "no annual data for this year"))
     financials[sid] = fin
 
-    # ---- June-2016 snapshot ----
-    price = june2016_close(sid)
-    e16 = eps.get("2016")
-    n16 = np_.get("2016")
-    pe = round(price / e16, 1) if (price and e16 and e16 > 0) else None
-    mktcap = round(pe * n16) if (pe is not None and n16) else None
-    dps16 = (payout.get("2016") / 100.0 * e16) if (payout.get("2016") is not None and e16) else None
-    div_yield = round(dps16 / price * 100, 2) if (dps16 is not None and price) else None
-    equity16 = None
-    if eqcap.get("2016") is not None and reserves.get("2016") is not None:
-        equity16 = eqcap["2016"] + reserves["2016"]
-    roe = round(n16 / equity16 * 100, 1) if (n16 and equity16 and equity16 > 0) else None
-    de = round(borrow.get("2016") / equity16, 2) if (borrow.get("2016") is not None and equity16 and equity16 > 0) else None
+    # ---- June-2021 snapshot ----
+    price = price_at(sid, ANCHOR)
+    ipo_month, ipo_price = (None, None)
+    effective_entry = price
+    if price is None:
+        fm, fp = first_price(sid)
+        if fm and fm > ANCHOR:  # listed after the anchor (e.g. PAYTM)
+            ipo_month, ipo_price = fm, fp
+            effective_entry = fp
+            gaps.append((sid, "listing", f"not listed at June 2021; IPO {fm}, using listing price as effective entry"))
 
-    # promoter holding: screener free data only reaches ~2023 -> use earliest available as proxy
+    e21 = eps.get(FY)
+    n21 = np_.get(FY)
+    # P/E only meaningful with a real June-2021 price and positive EPS
+    pe = round(price / e21, 1) if (price and e21 and e21 > 0) else None
+    mktcap = round(pe * n21) if (pe is not None and n21) else None
+    dps21 = (payout.get(FY) / 100.0 * e21) if (payout.get(FY) is not None and e21) else None
+    div_yield = round(dps21 / price * 100, 2) if (dps21 is not None and price and dps21 >= 0) else None
+
+    equity21 = None
+    if eqcap.get(FY) is not None and reserves.get(FY) is not None:
+        equity21 = eqcap[FY] + reserves[FY]
+    # Guard negative / zero net worth (e.g. Vodafone Idea) -> ratios meaningless
+    neg_networth = equity21 is not None and equity21 <= 0
+    roe = round(n21 / equity21 * 100, 1) if (n21 and equity21 and equity21 > 0) else None
+    de = round(borrow.get(FY) / equity21, 2) if (borrow.get(FY) is not None and equity21 and equity21 > 0) else None
+    if neg_networth:
+        gaps.append((sid, "roe/de", "negative net worth (FY2021) — ROE/D/E not meaningful"))
+
+    # promoter holding: screener free data reaches ~FY2023 -> earliest as proxy
     prom_val, prom_asof = None, None
     if promoters:
         prom_asof = sorted(promoters.keys())[0]
         prom_val = promoters[prom_asof]
-        if prom_asof != "2016":
-            gaps.append((sid, "promoterHolding", f"June-2016 unavailable; showing earliest screener value (FY{prom_asof})"))
+        if prom_asof != FY:
+            gaps.append((sid, "promoterHolding", f"June-2021 unavailable; earliest screener value (FY{prom_asof})"))
     else:
         gaps.append((sid, "promoterHolding", "not available from screener"))
 
-    if pe is None:
-        gaps.append((sid, "pe/marketCap", "missing FY2016 EPS or price"))
-    if roe is None:
-        gaps.append((sid, "roe", "missing FY2016 net profit or equity"))
-    if de is None:
-        gaps.append((sid, "de", "missing FY2016 borrowings or equity (note: banks report deposits, not borrowings)"))
-    # gross margin not exposed by screener; OPM% used as the available margin metric
-    gaps.append((sid, "grossMargin", "not exposed by screener; OPM% (operating margin) shown instead"))
+    if pe is None and not neg_networth and ipo_month is None:
+        gaps.append((sid, "pe", "loss-making or missing FY2021 EPS — no meaningful P/E"))
+    gaps.append((sid, "grossMargin", "not exposed by screener; OPM% shown instead"))
 
     snapshot[sid] = {
         "name": name,
         "sector": sector,
         "price": price,
+        "ipoMonth": ipo_month,
+        "effectiveEntry": effective_entry,
+        "negNetWorth": neg_networth,
         "marketCap": mktcap,
         "marketCapCategory": cap_category(mktcap),
         "pe": pe,
@@ -126,49 +142,61 @@ for sid, yahoo, name, sector in STOCKS:
         "de": de,
         "promoterHolding": prom_val,
         "promoterHoldingAsOf": prom_asof,
-        "opm": opm.get("2016"),
+        "opm": opm.get(FY),
         "grossMargin": None,
     }
 
 json.dump(financials, open(os.path.join(DATA, "financials.json"), "w"), indent=0)
-json.dump(snapshot, open(os.path.join(DATA, "snapshot-2016.json"), "w"), indent=1)
+json.dump(snapshot, open(os.path.join(DATA, "snapshot-2021.json"), "w"), indent=1)
 
 # ---- missing-data report ----
-have_2016 = sum(1 for s in snapshot.values() if s["pe"] is not None)
+have_pe = sum(1 for s in snapshot.values() if s["pe"] is not None)
 have_roe = sum(1 for s in snapshot.values() if s["roe"] is not None)
 have_de = sum(1 for s in snapshot.values() if s["de"] is not None)
-lines = []
-lines.append("# Missing Data Report")
-lines.append("")
-lines.append("Fixed window: prices Jan 2000-June 2026 (monthly). Financials FY2010-2016.")
-lines.append("All values reproducible against the fixed June-2026 reference date.")
-lines.append("")
-lines.append("## Coverage summary")
-lines.append("")
-lines.append(f"- **Prices (monthly, Jan 2000-June 2026):** 35/35 stocks + Nifty 50 fully sourced (real, yfinance). Every stock has the June-2016 and June-2026 anchor months. Some series start at their real listing date (Coal India 2010, PowerGrid 2007, NTPC 2004, Maruti 2003, etc.).")
-lines.append(f"- **June-2016 snapshot ratios:** P/E & Market Cap for {have_2016}/35; ROE for {have_roe}/35; D/E for {have_de}/35. Derived from real FY2016 screener financials + real June-2016 split/bonus-adjusted prices.")
-lines.append("- **Annual financials FY2015-FY2016:** real (screener.in P&L + cash flow).")
-lines.append("- **Annual financials FY2010-FY2014:** NOT available. screener.in shows a rolling ~12-year window that in 2026 starts at FY2015; the Wayback Machine has no 2016-era screener snapshots. These years are marked null and render as \"Data not available\". 3yr/5yr CAGR rows (which need FY2011/FY2013) are therefore not computable.")
-lines.append("- **Promoter holding:** screener's free shareholding table only reaches ~FY2023, so June-2016 values are unavailable; the earliest available figure is shown as a labelled proxy.")
-lines.append("- **Gross Profit Margin:** not exposed by screener; OPM% (operating margin) is shown as the available margin metric.")
-lines.append("")
-lines.append("## Per-field gaps")
-lines.append("")
+lines = [
+    "# Missing Data Report",
+    "",
+    "Fixed window: prices Jan 2000-June 2026 (monthly). Anchor = **June 2021**; "
+    "financials FY2015-FY2021. All values reproducible against the fixed "
+    "June-2026 reference date.",
+    "",
+    "## Coverage summary",
+    "",
+    "- **Prices (monthly, Jan 2000-June 2026):** 35/35 stocks + Nifty 50 real (yfinance). "
+    "Every stock has the June-2021 and June-2026 anchor months **except PAYTM** "
+    "(IPO Nov 2021 — see below).",
+    "- **Annual financials FY2015-FY2021:** real (screener.in P&L + cash flow) for the "
+    "full 7-year table — the June-2021 shift removes the old FY2010-14 gap. "
+    "PAYTM is missing FY2017-FY2018 (pre-listing, not in screener).",
+    f"- **June-2021 snapshot ratios:** P/E for {have_pe}/35, ROE for {have_roe}/35, "
+    f"D/E for {have_de}/35. Derived from real FY2021 financials + the real "
+    "split/bonus-adjusted June-2021 close.",
+    "- **Loss-makers (FY2021):** IDEA, PAYTM, YESBANK, PVRINOX correctly show **no P/E** "
+    "(negative EPS). **Vodafone Idea (IDEA)** has **negative net worth** in FY2021, so "
+    "ROE/D/E are intentionally blank (not meaningful).",
+    "- **PAYTM:** not listed as of June 2021 (IPO 18 Nov 2021). June-2021 snapshot ratios "
+    "are N/A; the price chart and simulator use its **first listed close (Nov 2021)** as "
+    "the effective entry, clearly flagged.",
+    "- **Promoter holding:** screener's free shareholding table only reaches ~FY2023, so "
+    "the earliest available figure is shown as a labelled proxy.",
+    "- **Gross Profit Margin:** not exposed by screener; OPM% (operating margin) shown instead.",
+    "",
+    "## Per-field gaps",
+    "",
+]
 by_field = {}
 for sid, field, note in gaps:
     by_field.setdefault(field, []).append((sid, note))
 for field in sorted(by_field):
     items = by_field[field]
-    note = items[0][1]
     sids = ", ".join(sid for sid, _ in items)
-    lines.append(f"- **{field}** ({len(items)}): {note}  \n  _{sids}_")
+    lines.append(f"- **{field}** ({len(items)}): {items[0][1]}  \n  _{sids}_")
 open(os.path.join(DATA, "missing-data-report.md"), "w").write("\n".join(lines) + "\n")
 
-print("financials.json, snapshot-2016.json, missing-data-report.md written")
-print(f"PE/MktCap: {have_2016}/35  ROE: {have_roe}/35  D/E: {have_de}/35")
-print("\nSample snapshots:")
-for sid in ["TCS", "HDFCBANK", "ITC", "SBIN", "TATAMOTORS", "MARUTI"]:
+print("financials.json, snapshot-2021.json, missing-data-report.md written")
+print(f"PE: {have_pe}/35  ROE: {have_roe}/35  D/E: {have_de}/35")
+print("\nNew / notable snapshots:")
+for sid in ["IDEA", "ZEEL", "PAYTM", "YESBANK", "PVRINOX", "TCS", "HDFCBANK"]:
     s = snapshot[sid]
-    print(f"  {sid:11} price={s['price']} mktcap={s['marketCap']} ({s['marketCapCategory']}) "
-          f"PE={s['pe']} DivY={s['divYield']} ROE={s['roe']} D/E={s['de']} "
-          f"Prom={s['promoterHolding']}@{s['promoterHoldingAsOf']} OPM={s['opm']}")
+    print(f"  {sid:9} price={s['price']} ipo={s['ipoMonth']} mktcap={s['marketCap']} "
+          f"PE={s['pe']} ROE={s['roe']} D/E={s['de']} negNW={s['negNetWorth']} OPM={s['opm']}")

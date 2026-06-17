@@ -15,10 +15,10 @@ export default function Home() {
             A financial-literacy time capsule of {STOCKS.length} NSE stocks
           </h1>
           <p className="mt-3 max-w-2xl text-gray-600">
-            Step back to <strong>June 2016</strong>, study {STOCKS.length} of
+            Step back to <strong>June 2021</strong>, study {STOCKS.length} of
             India&apos;s biggest companies as they looked then, build a portfolio
-            for a real-life scenario, and fast-forward a decade to June 2026 to
-            see how it played out — all on a fixed, reproducible dataset.
+            for a real-life scenario, and fast-forward five years to June 2026
+            to see how it played out — all on a fixed, reproducible dataset.
           </p>
         </section>
 
@@ -33,8 +33,8 @@ export default function Home() {
             <h2 className="text-xl font-bold text-gray-900">Screener Clone</h2>
             <p className="mt-2 text-sm text-gray-600">
               A screener.in-style company page for each stock, frozen at June
-              2016: snapshot ratios, year-by-year financials, a Jan 2000–June
-              2016 price chart, and peer comparison. Nothing beyond June 2016 —
+              2021: snapshot ratios, year-by-year financials, a Jan 2000–June
+              2021 price chart, and peer comparison. Nothing beyond June 2021 —
               participants get a genuine &ldquo;track record&rdquo; view before
               they pick.
             </p>
@@ -56,7 +56,7 @@ export default function Home() {
             <p className="mt-2 text-sm text-gray-600">
               Password-protected host tool. Pick a life scenario, enter a
               team&apos;s 8-stock portfolio, and reveal indexed performance over
-              June 2016–June 2026 with a Nifty 50 overlay, a 1–10 rating, and a
+              June 2021–June 2026 with a Nifty 50 overlay, a 1–10 rating, and a
               per-holding breakdown.
             </p>
             <span className="mt-4 inline-block text-sm font-semibold text-gray-700 group-hover:underline">

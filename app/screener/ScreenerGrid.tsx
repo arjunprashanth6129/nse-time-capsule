@@ -132,7 +132,7 @@ export default function ScreenerGrid({ rows }: { rows: ScreenerRow[] }) {
                 {rupee(r.price)}
               </span>
               <span className="text-[10px] uppercase tracking-wide text-gray-400">
-                Jun 2016
+                Jun 2021
               </span>
             </div>
 

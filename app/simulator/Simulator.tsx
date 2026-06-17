@@ -207,7 +207,7 @@ export default function Simulator({
             {pending ? "Running…" : "Run simulation →"}
           </button>
           <span className="text-xs text-slate-500">
-            Reveals June 2016 → June 2026 performance
+            Reveals June 2021 → June 2026 performance
           </span>
         </div>
       </section>
@@ -222,7 +222,7 @@ export default function Simulator({
               positive={result.totalReturn >= 0}
               big
             />
-            <Stat label="Entry value (Jun 2016)" value={rupee(result.entryValue)} />
+            <Stat label="Entry value (Jun 2021)" value={rupee(result.entryValue)} />
             <Stat label="Exit value (Jun 2026)" value={rupee(result.exitValue)} />
             <RatingCard rating={result.rating} accent={scenario.accent} />
           </div>
@@ -230,7 +230,7 @@ export default function Simulator({
           <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
             <div className="mb-1 flex items-baseline justify-between">
               <h2 className="font-semibold text-slate-100">
-                Indexed performance (100 = June 2016)
+                Indexed performance (100 = June 2021)
               </h2>
               <span className="text-xs text-slate-500">vs Nifty 50</span>
             </div>
@@ -249,7 +249,7 @@ export default function Simulator({
                   <tr className="border-b border-slate-800 text-right text-xs text-slate-500">
                     <th className="py-2 text-left font-medium">Stock</th>
                     <th className="px-2 py-2 font-medium">Qty</th>
-                    <th className="px-2 py-2 font-medium">Entry (Jun 16)</th>
+                    <th className="px-2 py-2 font-medium">Entry (Jun 21)</th>
                     <th className="px-2 py-2 font-medium">Exit (Jun 26)</th>
                     <th className="px-2 py-2 font-medium">Return</th>
                     <th className="px-2 py-2 font-medium">Weight</th>

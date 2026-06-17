@@ -53,7 +53,7 @@ export default async function SimulatorPage() {
           <h1 className="text-2xl font-bold">Portfolio Simulator</h1>
           <p className="mt-1 text-sm text-slate-400">
             Pick a scenario, enter a team&apos;s portfolio, and reveal how it
-            performed over the fixed June 2016 → June 2026 window.
+            performed over the fixed June 2021 → June 2026 window.
           </p>
         </div>
         <Simulator stocks={stocks} entryPrices={entryPrices} />

@@ -24,6 +24,7 @@ import {
   ratio,
   rupee,
   num,
+  monthLabel,
   DASH,
 } from "@/lib/format";
 
@@ -34,7 +35,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: Promise<{ ticker: string }> }) {
   return params.then(({ ticker }) => {
     const m = getStockMeta(ticker);
-    return { title: m ? `${m.name} — June 2016 time capsule` : "Stock" };
+    return { title: m ? `${m.name} — June 2021 time capsule` : "Stock" };
   });
 }
 
@@ -106,30 +107,31 @@ export default async function StockDetail({
   const get = (y: string, k: keyof YearFin): number | null =>
     fin[y]?.[k] ?? null;
 
-  // CAGR windows (3yr FY2013-16, 5yr FY2011-16) + 1yr fallback.
+  // CAGR windows: 1yr (FY20→21), 3yr (FY18→21), 5yr (FY16→21).
   const revC = {
-    one: cagr(get("2015", "revenue"), get("2016", "revenue"), 1),
-    three: cagr(get("2013", "revenue"), get("2016", "revenue"), 3),
-    five: cagr(get("2011", "revenue"), get("2016", "revenue"), 5),
+    one: cagr(get("2020", "revenue"), get("2021", "revenue"), 1),
+    three: cagr(get("2018", "revenue"), get("2021", "revenue"), 3),
+    five: cagr(get("2016", "revenue"), get("2021", "revenue"), 5),
   };
   const npC = {
-    one: cagr(get("2015", "netProfit"), get("2016", "netProfit"), 1),
-    three: cagr(get("2013", "netProfit"), get("2016", "netProfit"), 3),
-    five: cagr(get("2011", "netProfit"), get("2016", "netProfit"), 5),
+    one: cagr(get("2020", "netProfit"), get("2021", "netProfit"), 1),
+    three: cagr(get("2018", "netProfit"), get("2021", "netProfit"), 3),
+    five: cagr(get("2016", "netProfit"), get("2021", "netProfit"), 5),
   };
-  const epsG = cagr(get("2015", "eps"), get("2016", "eps"), 1);
+  // EPS-consistency over the full FY2015→FY2021 trend.
+  const epsTrend = cagr(get("2015", "eps"), get("2021", "eps"), 6);
+  const npTrend = cagr(get("2015", "netProfit"), get("2021", "netProfit"), 6);
 
-  // EPS-consistency note (best window available: FY15 -> FY16).
   let epsNote: string;
-  if (epsG == null || npC.one == null) {
+  if (epsTrend == null || npTrend == null) {
     epsNote =
-      "Not enough year-on-year data to compare EPS growth with profit growth.";
-  } else if (epsG >= npC.one - 1.5) {
+      "Not enough FY2015–FY2021 data to compare EPS growth with profit growth.";
+  } else if (epsTrend >= npTrend - 1.5) {
     epsNote =
-      "EPS growth tracks net-profit growth (FY15→FY16) — no major equity dilution.";
+      "EPS growth tracks net-profit growth (FY2015→FY2021) — no major equity dilution.";
   } else {
     epsNote =
-      "EPS growth lags net-profit growth (FY15→FY16) — equity dilution likely.";
+      "EPS growth lags net-profit growth (FY2015→FY2021) — equity dilution likely.";
   }
 
   const peerIds = getPeerIds(ticker);
@@ -177,42 +179,69 @@ export default async function StockDetail({
               </div>
             </div>
             <div className="text-right">
-              <div className="tnum text-2xl font-bold text-gray-900">
-                {rupee(snap.price)}
-              </div>
-              <div className="text-[11px] uppercase tracking-wide text-gray-400">
-                Close · June 2016
-              </div>
+              {snap.ipoMonth ? (
+                <>
+                  <div className="tnum text-2xl font-bold text-gray-400">—</div>
+                  <div className="text-[11px] font-medium text-amber-700">
+                    Not listed · IPO {monthLabel(snap.ipoMonth)}
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="tnum text-2xl font-bold text-gray-900">
+                    {rupee(snap.price)}
+                  </div>
+                  <div className="text-[11px] uppercase tracking-wide text-gray-400">
+                    Close · June 2021
+                  </div>
+                </>
+              )}
             </div>
           </div>
+
+          {snap.ipoMonth && (
+            <div className="mt-3 rounded-md bg-amber-50 px-3 py-2 text-xs text-amber-800">
+              <strong>Not yet listed as of June 2021.</strong> {meta.name} IPO&apos;d
+              in {monthLabel(snap.ipoMonth)}, so June-2021 snapshot ratios are
+              unavailable. The simulator uses its first listed close (
+              {rupee(snap.effectiveEntry)}) as the effective entry price.
+            </div>
+          )}
+          {snap.negNetWorth && (
+            <div className="mt-3 rounded-md bg-red-50 px-3 py-2 text-xs text-red-700">
+              <strong>Negative net worth (FY2021).</strong> Accumulated losses
+              exceed equity, so ROE and Debt/Equity are not meaningful and are
+              left blank.
+            </div>
+          )}
 
           <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
             <Chip label="Market Cap" value={croreCompact(snap.marketCap)} />
             <Chip label="Stock P/E" value={ratio(snap.pe, 1)} />
-            <Chip label="ROE" value={pct(snap.roe)} hint="FY2016" />
+            <Chip label="ROE" value={pct(snap.roe)} hint="FY2021" />
             <Chip label="Div Yield" value={pct(snap.divYield, 2)} />
-            <Chip label="Debt / Equity" value={ratio(snap.de, 2)} hint="FY2016" />
+            <Chip label="Debt / Equity" value={ratio(snap.de, 2)} hint="FY2021" />
             <Chip
               label="Promoter Hold."
               value={pct(snap.promoterHolding, 2)}
               hint={
                 snap.promoterHolding == null
                   ? "no promoter"
-                  : snap.promoterHoldingAsOf === "2016"
-                    ? "Jun 2016"
+                  : snap.promoterHoldingAsOf === "2021"
+                    ? "Jun 2021"
                     : `≈ FY${snap.promoterHoldingAsOf}*`
               }
             />
           </div>
           <p className="mt-3 text-[11px] text-gray-400">
-            Snapshot ratios derived from real FY2016 financials and the
-            split/bonus-adjusted June-2016 close.{" "}
+            Snapshot ratios derived from real FY2021 financials and the
+            split/bonus-adjusted June-2021 close.{" "}
             {snap.opm != null && (
-              <>Operating margin (OPM) FY2016: {pct(snap.opm)}. </>
+              <>Operating margin (OPM) FY2021: {pct(snap.opm)}. </>
             )}
             {snap.promoterHoldingAsOf &&
-              snap.promoterHoldingAsOf !== "2016" &&
-              "* Promoter holding shown is the earliest figure available from screener (June-2016 value not published)."}
+              snap.promoterHoldingAsOf !== "2021" &&
+              "* Promoter holding shown is the earliest figure available from screener (June-2021 value not published)."}
           </p>
         </section>
 
@@ -224,15 +253,26 @@ export default async function StockDetail({
         <section id="chart" className="scroll-mt-28 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className="mb-1 flex items-baseline justify-between">
             <h2 className="text-lg font-semibold text-gray-900">
-              Price history · {startYear} – June 2016
+              Price history · {startYear} – June 2021
             </h2>
             <span className="text-xs text-gray-400">monthly close</span>
           </div>
           <p className="mb-3 text-xs text-gray-500">
             Long-term track record shown to participants <em>before</em> they
-            pick. This chart never extends past June 2016.
+            pick. This chart never extends past June 2021.
           </p>
-          <PriceChart data={prices} />
+          {prices.length > 0 ? (
+            <PriceChart data={prices} />
+          ) : (
+            <div className="grid h-72 place-items-center rounded-md bg-gray-50 text-center text-sm text-gray-500">
+              <span>
+                Not listed as of June 2021
+                {snap.ipoMonth ? ` — IPO ${monthLabel(snap.ipoMonth)}` : ""}.
+                <br />
+                No pre-June-2021 price history to display.
+              </span>
+            </div>
+          )}
         </section>
 
         {/* ---- P&L ---- */}
@@ -241,8 +281,7 @@ export default async function StockDetail({
             Profit &amp; Loss
           </h2>
           <p className="mb-3 text-xs text-gray-500">
-            Year-by-year, FY2010–FY2016 (₹ Crore). FY2010–FY2014 are not
-            available from current sources (see README) and show as{" "}
+            Year-by-year, FY2015–FY2021 (₹ Crore). Any unavailable year shows as{" "}
             <span className="text-gray-400">n/a</span>.
           </p>
           <div className="overflow-x-auto thin-scroll">
@@ -302,9 +341,9 @@ export default async function StockDetail({
             <strong>EPS consistency:</strong> {epsNote}
           </p>
           <p className="mt-2 text-[11px] text-gray-400">
-            3-Yr (FY13→FY16) and 5-Yr (FY11→FY16) windows need FY2011/FY2013
-            data, which is unavailable from current sources — only the 1-Yr
-            (FY15→FY16) figure can be computed.
+            Windows: 1-Yr (FY20→FY21), 3-Yr (FY18→FY21), 5-Yr (FY16→FY21). A
+            window shows n/a only where a required year is missing (e.g. PAYTM,
+            which lacks FY2017–FY2018).
           </p>
         </section>
 
@@ -314,7 +353,7 @@ export default async function StockDetail({
             Cash Flow from Operations
           </h2>
           <p className="mb-3 text-xs text-gray-500">
-            FY2010–FY2016 (₹ Crore). Negative operating cash flow is flagged in
+            FY2015–FY2021 (₹ Crore). Negative operating cash flow is flagged in
             red.
           </p>
           <div className="overflow-x-auto thin-scroll">
@@ -362,7 +401,7 @@ export default async function StockDetail({
           </h2>
           <p className="mb-3 text-xs text-gray-500">
             Compared only against peers within these {STOCK_IDS.length} stocks,
-            all as of June 2016.
+            all as of June 2021.
           </p>
           {hasNoPeers(ticker) ? (
             <p className="rounded-md bg-gray-50 px-3 py-2 text-sm text-gray-600">
@@ -423,7 +462,7 @@ export default async function StockDetail({
         </section>
 
         <p className="mt-6 text-center text-xs text-gray-400">
-          Time capsule · data frozen at June 2016 · fixed reproducible dataset
+          Time capsule · data frozen at June 2021 · fixed reproducible dataset
         </p>
       </main>
     </>

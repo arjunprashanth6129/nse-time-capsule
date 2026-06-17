@@ -4,9 +4,9 @@
 import pricesJson from "@/data/prices.json";
 import niftyJson from "@/data/nifty.json";
 import financialsJson from "@/data/financials.json";
-import snapshotJson from "@/data/snapshot-2016.json";
+import snapshotJson from "@/data/snapshot-2021.json";
 
-export const ANCHOR_MONTH = "2016-06"; // June 2016 — the "time capsule" date
+export const ANCHOR_MONTH = "2021-06"; // June 2021 — the "time capsule" date
 export const END_MONTH = "2026-06"; // fixed reproducible end of window
 
 export interface PricePoint {
@@ -24,7 +24,10 @@ export interface YearFin {
 export interface Snapshot {
   name: string;
   sector: string;
-  price: number | null;
+  price: number | null; // June-2021 close (null if not yet listed, e.g. PAYTM)
+  ipoMonth: string | null; // "YYYY-MM" if listed after the anchor
+  effectiveEntry: number | null; // June-2021 close, or first listed close for post-anchor IPOs
+  negNetWorth: boolean;
   marketCap: number | null;
   marketCapCategory: "Large" | "Mid" | "Small" | null;
   pe: number | null;
@@ -45,7 +48,7 @@ const financials = financialsJson as Record<
 >;
 const snapshots = snapshotJson as Record<string, Snapshot>;
 
-export const FIN_YEARS = ["2010", "2011", "2012", "2013", "2014", "2015", "2016"];
+export const FIN_YEARS = ["2015", "2016", "2017", "2018", "2019", "2020", "2021"];
 
 export function getSnapshot(id: string): Snapshot | undefined {
   return snapshots[id];
@@ -63,12 +66,12 @@ export function getFullPrices(id: string): PricePoint[] {
   return prices[id] ?? [];
 }
 
-// Screener long-term chart: Jan 2000 – June 2016 (never shows beyond June 2016).
+// Screener long-term chart: Jan 2000 – June 2021 (never shows beyond June 2021).
 export function getScreenerPrices(id: string): PricePoint[] {
   return getFullPrices(id).filter((p) => p.date <= ANCHOR_MONTH);
 }
 
-// Simulator window: June 2016 – June 2026 (inclusive of both anchors).
+// Simulator window: June 2021 – June 2026 (inclusive of both anchors).
 export function getSimPrices(id: string): PricePoint[] {
   return getFullPrices(id).filter(
     (p) => p.date >= ANCHOR_MONTH && p.date <= END_MONTH,
@@ -84,8 +87,21 @@ export function priceAt(id: string, month: string): number | null {
   return p ? p.close : null;
 }
 
+// Entry = June-2021 close, or — for stocks that listed after the anchor
+// (PAYTM, IPO Nov 2021) — the first available close in the window, flagged
+// via Snapshot.ipoMonth / effectiveEntry.
 export function entryPrice(id: string): number | null {
-  return priceAt(id, ANCHOR_MONTH);
+  const at = priceAt(id, ANCHOR_MONTH);
+  if (at != null) return at;
+  const sim = getSimPrices(id);
+  return sim.length ? sim[0].close : null;
+}
+
+// First available month in the simulator window (anchor, or listing month).
+export function entryMonth(id: string): string {
+  if (priceAt(id, ANCHOR_MONTH) != null) return ANCHOR_MONTH;
+  const sim = getSimPrices(id);
+  return sim.length ? sim[0].date : ANCHOR_MONTH;
 }
 
 export function exitPrice(id: string): number | null {

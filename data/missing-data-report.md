@@ -1,34 +1,30 @@
 # Missing Data Report
 
-Fixed window: prices Jan 2000-June 2026 (monthly). Financials FY2010-2016.
-All values reproducible against the fixed June-2026 reference date.
+Fixed window: prices Jan 2000-June 2026 (monthly). Anchor = **June 2021**; financials FY2015-FY2021. All values reproducible against the fixed June-2026 reference date.
 
 ## Coverage summary
 
-- **Prices (monthly, Jan 2000-June 2026):** 35/35 stocks + Nifty 50 fully sourced (real, yfinance). Every stock has the June-2016 and June-2026 anchor months. Some series start at their real listing date (Coal India 2010, PowerGrid 2007, NTPC 2004, Maruti 2003, etc.).
-- **June-2016 snapshot ratios:** P/E & Market Cap for 33/35; ROE for 35/35; D/E for 29/35. Derived from real FY2016 screener financials + real June-2016 split/bonus-adjusted prices.
-- **Annual financials FY2015-FY2016:** real (screener.in P&L + cash flow).
-- **Annual financials FY2010-FY2014:** NOT available. screener.in shows a rolling ~12-year window that in 2026 starts at FY2015; the Wayback Machine has no 2016-era screener snapshots. These years are marked null and render as "Data not available". 3yr/5yr CAGR rows (which need FY2011/FY2013) are therefore not computable.
-- **Promoter holding:** screener's free shareholding table only reaches ~FY2023, so June-2016 values are unavailable; the earliest available figure is shown as a labelled proxy.
-- **Gross Profit Margin:** not exposed by screener; OPM% (operating margin) is shown as the available margin metric.
+- **Prices (monthly, Jan 2000-June 2026):** 35/35 stocks + Nifty 50 real (yfinance). Every stock has the June-2021 and June-2026 anchor months **except PAYTM** (IPO Nov 2021 — see below).
+- **Annual financials FY2015-FY2021:** real (screener.in P&L + cash flow) for the full 7-year table — the June-2021 shift removes the old FY2010-14 gap. PAYTM is missing FY2017-FY2018 (pre-listing, not in screener).
+- **June-2021 snapshot ratios:** P/E for 29/35, ROE for 34/35, D/E for 28/35. Derived from real FY2021 financials + the real split/bonus-adjusted June-2021 close.
+- **Loss-makers (FY2021):** IDEA, PAYTM, YESBANK, PVRINOX correctly show **no P/E** (negative EPS). **Vodafone Idea (IDEA)** has **negative net worth** in FY2021, so ROE/D/E are intentionally blank (not meaningful).
+- **PAYTM:** not listed as of June 2021 (IPO 18 Nov 2021). June-2021 snapshot ratios are N/A; the price chart and simulator use its **first listed close (Nov 2021)** as the effective entry, clearly flagged.
+- **Promoter holding:** screener's free shareholding table only reaches ~FY2023, so the earliest available figure is shown as a labelled proxy.
+- **Gross Profit Margin:** not exposed by screener; OPM% (operating margin) shown instead.
 
 ## Per-field gaps
 
-- **FY2010** (35): no annual data (screener window starts FY2015)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **FY2011** (35): no annual data (screener window starts FY2015)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **FY2012** (35): no annual data (screener window starts FY2015)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **FY2013** (35): no annual data (screener window starts FY2015)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **FY2014** (35): no annual data (screener window starts FY2015)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **de** (6): missing FY2016 borrowings or equity (note: banks report deposits, not borrowings)  
-  _HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, BAJFINANCE_
-- **grossMargin** (35): not exposed by screener; OPM% (operating margin) shown instead  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
-- **pe/marketCap** (2): missing FY2016 EPS or price  
-  _TATASTEEL, HINDALCO_
-- **promoterHolding** (35): June-2016 unavailable; showing earliest screener value (FY2023)  
-  _TCS, INFY, HCLTECH, WIPRO, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, AXISBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, DABUR, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, MM, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, PIDILITIND, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL_
+- **FY2017** (1): no annual data for this year  
+  _PAYTM_
+- **FY2018** (1): no annual data for this year  
+  _PAYTM_
+- **grossMargin** (35): not exposed by screener; OPM% shown instead  
+  _TCS, INFY, HCLTECH, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, YESBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL, IDEA, ZEEL, PAYTM, PVRINOX_
+- **listing** (1): not listed at June 2021; IPO 2021-11, using listing price as effective entry  
+  _PAYTM_
+- **pe** (4): loss-making or missing FY2021 EPS — no meaningful P/E  
+  _YESBANK, TATAMOTORS, BHARTIARTL, PVRINOX_
+- **promoterHolding** (35): June-2021 unavailable; earliest screener value (FY2023)  
+  _TCS, INFY, HCLTECH, HDFCBANK, ICICIBANK, KOTAKBANK, SBIN, YESBANK, HINDUNILVR, ITC, NESTLEIND, BRITANNIA, SUNPHARMA, DRREDDY, CIPLA, DIVISLAB, MARUTI, TATAMOTORS, BAJAJAUTO, LT, ULTRACEMCO, ASIANPAINT, TITAN, BAJFINANCE, POWERGRID, NTPC, COALINDIA, IOC, TATASTEEL, HINDALCO, BHARTIARTL, IDEA, ZEEL, PAYTM, PVRINOX_
+- **roe/de** (1): negative net worth (FY2021) — ROE/D/E not meaningful  
+  _IDEA_

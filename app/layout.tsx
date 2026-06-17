@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "NSE Time Capsule — June 2016",
+  title: "NSE Time Capsule — June 2021",
   description:
-    "A financial-literacy teaching tool: a screener.in-style time capsule of 35 NSE stocks as of June 2016, plus a private portfolio simulator over the fixed June 2016 – June 2026 window.",
+    "A financial-literacy teaching tool: a screener.in-style time capsule of 35 NSE stocks as of June 2021, plus a private portfolio simulator over the fixed June 2021 – June 2026 window.",
 };
 
 export default function RootLayout({
