@@ -136,6 +136,26 @@ export default async function StockDetail({
       "EPS growth lags net-profit growth (FY2015→FY2021) — equity dilution likely.";
   }
 
+  // EPS cells to flag red: years inside a run of >=3 consecutive YoY declines.
+  const epsDeclineYears = (() => {
+    const vals = FIN_YEARS.map((y) => get(y, "eps"));
+    const decl = vals.map(
+      (v, i) =>
+        i > 0 && v != null && vals[i - 1] != null && v < (vals[i - 1] as number),
+    );
+    const flag = new Set<string>();
+    let i = 1;
+    while (i < decl.length) {
+      if (decl[i]) {
+        let j = i;
+        while (j < decl.length && decl[j]) j++;
+        if (j - i >= 3) for (let k = i - 1; k <= j - 1; k++) flag.add(FIN_YEARS[k]);
+        i = j;
+      } else i++;
+    }
+    return flag;
+  })();
+
   const peerIds = getPeerIds(ticker);
   const peerRows = [ticker, ...peerIds].map((id) => ({
     id,
@@ -316,8 +336,18 @@ export default async function StockDetail({
                     </td>
                     {FIN_YEARS.map((y) => {
                       const v = get(y, key as keyof YearFin);
+                      const red =
+                        (key === "netProfit" && v != null && v < 0) ||
+                        (key === "eps" && epsDeclineYears.has(y));
                       return (
-                        <td key={y} className="px-2 py-2 text-gray-800">
+                        <td
+                          key={y}
+                          className={`px-2 py-2 ${
+                            red
+                              ? "font-semibold text-[var(--color-neg)]"
+                              : "text-gray-800"
+                          }`}
+                        >
                           {v == null ? <Na /> : fmt(v)}
                         </td>
                       );
