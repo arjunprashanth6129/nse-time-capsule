@@ -16,6 +16,7 @@ import {
   FIN_YEARS,
   type YearFin,
 } from "@/lib/data";
+import { getCompanyAbout } from "@/lib/companies";
 import {
   crore,
   croreCompact,
@@ -252,6 +253,23 @@ export default async function StockDetail({
               "* Promoter holding shown is the earliest figure available from screener (June-2021 value not published)."}
           </p>
         </section>
+
+        {/* ---- About ---- */}
+        {getCompanyAbout(ticker) && (
+          <section className="mt-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            <div className="mb-1 flex items-baseline justify-between">
+              <h2 className="text-sm font-semibold text-gray-900">
+                About {meta.name}
+              </h2>
+              <span className="text-[11px] uppercase tracking-wide text-gray-400">
+                {meta.sector}
+              </span>
+            </div>
+            <p className="text-sm leading-relaxed text-gray-600">
+              {getCompanyAbout(ticker)}
+            </p>
+          </section>
+        )}
 
         <div className="mt-6">
           <SubNav />
