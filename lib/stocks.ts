@@ -1,7 +1,8 @@
-// Canonical 40-stock universe. Mirrors scripts/stocks.py.
+// Canonical 50-stock universe — the final verified time-capsule list
+// (40 "good fundamentals" + 10 deliberate weak picks, all NSE, June 2021).
 // `id` is the app ticker (JSON key + dropdown value); `sector` drives peers.
 // NOTE: the UI never flags a stock as "good" or "bad" — students must read the
-// fundamentals themselves. (6 of the 40 are deliberate weak picks.)
+// fundamentals themselves.
 
 export interface StockMeta {
   id: string;
@@ -10,68 +11,96 @@ export interface StockMeta {
 }
 
 export const STOCKS: StockMeta[] = [
-  { id: "TCS", name: "Tata Consultancy Services", sector: "IT" },
-  { id: "INFY", name: "Infosys", sector: "IT" },
-  { id: "HCLTECH", name: "HCL Technologies", sector: "IT" },
-  { id: "HDFCBANK", name: "HDFC Bank", sector: "Banking" },
-  { id: "ICICIBANK", name: "ICICI Bank", sector: "Banking" },
-  { id: "KOTAKBANK", name: "Kotak Mahindra Bank", sector: "Banking" },
-  { id: "YESBANK", name: "Yes Bank", sector: "Banking" },
-  { id: "BAJFINANCE", name: "Bajaj Finance", sector: "NBFC" },
-  { id: "HINDUNILVR", name: "Hindustan Unilever", sector: "FMCG Large" },
-  { id: "ITC", name: "ITC", sector: "FMCG Large" },
-  { id: "NESTLEIND", name: "Nestle India", sector: "FMCG Large" },
-  { id: "BRITANNIA", name: "Britannia Industries", sector: "FMCG Large" },
-  { id: "MARICO", name: "Marico", sector: "FMCG Large" },
-  { id: "VSTIND", name: "VST Industries", sector: "FMCG Small" },
-  { id: "TITAN", name: "Titan Company", sector: "Consumer" },
-  { id: "ASIANPAINT", name: "Asian Paints", sector: "Consumer" },
-  { id: "PAGEIND", name: "Page Industries", sector: "Consumer" },
-  { id: "SUNPHARMA", name: "Sun Pharmaceutical", sector: "Pharma Large" },
-  { id: "CIPLA", name: "Cipla", sector: "Pharma Large" },
-  { id: "DRREDDY", name: "Dr. Reddy's Laboratories", sector: "Pharma Large" },
-  { id: "DIVISLAB", name: "Divi's Laboratories", sector: "Pharma Large" },
-  { id: "TORNTPHARM", name: "Torrent Pharmaceuticals", sector: "Pharma Mid" },
-  { id: "MARUTI", name: "Maruti Suzuki India", sector: "Auto" },
-  { id: "BAJAJAUTO", name: "Bajaj Auto", sector: "Auto" },
-  { id: "LT", name: "Larsen & Toubro", sector: "Capital Goods" },
-  { id: "ABB", name: "ABB India", sector: "Capital Goods" },
-  { id: "GRINDWELL", name: "Grindwell Norton", sector: "Industrial" },
-  { id: "POLYCAB", name: "Polycab India", sector: "Pipes/Plastics" },
-  { id: "SUPREMEIND", name: "Supreme Industries", sector: "Pipes/Plastics" },
-  { id: "FINOLEXIND", name: "Finolex Industries", sector: "Pipes/Plastics" },
-  { id: "FINEORG", name: "Fine Organic Industries", sector: "Specialty Chem" },
-  { id: "CONCOR", name: "Container Corporation of India", sector: "Logistics" },
-  { id: "POWERGRID", name: "Power Grid Corporation", sector: "Utilities PSU" },
-  { id: "NTPC", name: "NTPC", sector: "Utilities PSU" },
-  { id: "BHARTIARTL", name: "Bharti Airtel", sector: "Telecom" },
-  { id: "IDEA", name: "Vodafone Idea", sector: "Telecom" },
+  // --- Banks ---
+  { id: "HDFCBANK", name: "HDFC Bank", sector: "Banks" },
+  { id: "KOTAKBANK", name: "Kotak Mahindra Bank", sector: "Banks" },
+  { id: "AXISBANK", name: "Axis Bank", sector: "Banks" },
+  { id: "YESBANK", name: "Yes Bank", sector: "Banks" },
+  // --- NBFC/Financial Services ---
+  { id: "BAJAJFINSV", name: "Bajaj Finserv", sector: "NBFC/Financial Services" },
+  { id: "BAJFINANCE", name: "Bajaj Finance", sector: "NBFC/Financial Services" },
+  { id: "SUNDARMFIN", name: "Sundaram Finance", sector: "NBFC/Financial Services" },
+  { id: "AAVAS", name: "Aavas Financiers", sector: "NBFC/Financial Services" },
+  // --- IT Services ---
+  { id: "CYIENT", name: "Cyient", sector: "IT Services" },
+  { id: "MPHASIS", name: "Mphasis", sector: "IT Services" },
+  { id: "HCLTECH", name: "HCL Technologies", sector: "IT Services" },
+  { id: "TECHM", name: "Tech Mahindra", sector: "IT Services" },
+  { id: "ZENSARTECH", name: "Zensar Technologies", sector: "IT Services" },
+  { id: "COFORGE", name: "Coforge", sector: "IT Services" },
+  { id: "INFY", name: "Infosys", sector: "IT Services" },
+  { id: "WIPRO", name: "Wipro", sector: "IT Services" },
+  // --- Pharma/Biotech ---
+  { id: "BIOCON", name: "Biocon", sector: "Pharma/Biotech" },
+  { id: "DRREDDY", name: "Dr. Reddy's Laboratories", sector: "Pharma/Biotech" },
+  { id: "CIPLA", name: "Cipla", sector: "Pharma/Biotech" },
+  { id: "DIVISLAB", name: "Divi's Laboratories", sector: "Pharma/Biotech" },
+  // --- FMCG ---
+  { id: "GODREJCP", name: "Godrej Consumer Products", sector: "FMCG" },
+  { id: "COLPAL", name: "Colgate-Palmolive (India)", sector: "FMCG" },
+  { id: "JYOTHYLAB", name: "Jyothy Labs", sector: "FMCG" },
+  { id: "BRITANNIA", name: "Britannia Industries", sector: "FMCG" },
+  { id: "TATACONSUM", name: "Tata Consumer Products", sector: "FMCG" },
+  { id: "MARICO", name: "Marico", sector: "FMCG" },
+  { id: "NESTLEIND", name: "Nestle India", sector: "FMCG" },
+  { id: "ITC", name: "ITC", sector: "FMCG" },
+  // --- Beverages ---
+  { id: "VBL", name: "Varun Beverages", sector: "Beverages" },
+  // --- Consumer Durables ---
+  { id: "HAVELLS", name: "Havells India", sector: "Consumer Durables" },
+  { id: "VOLTAS", name: "Voltas", sector: "Consumer Durables" },
+  // --- Industrials/Building Materials ---
+  { id: "ASTRAL", name: "Astral", sector: "Industrials/Building Materials" },
+  { id: "KAJARIACER", name: "Kajaria Ceramics", sector: "Industrials/Building Materials" },
+  { id: "AMBUJACEM", name: "Ambuja Cements", sector: "Industrials/Building Materials" },
+  { id: "CERA", name: "Cera Sanitaryware", sector: "Industrials/Building Materials" },
+  { id: "SUPREMEIND", name: "Supreme Industries", sector: "Industrials/Building Materials" },
+  { id: "GRINDWELL", name: "Grindwell Norton", sector: "Industrials/Building Materials" },
+  // --- Energy/Oil & Gas ---
+  { id: "RELIANCE", name: "Reliance Industries", sector: "Energy/Oil & Gas" },
+  { id: "BPCL", name: "Bharat Petroleum", sector: "Energy/Oil & Gas" },
+  // --- Power/Utilities ---
+  { id: "ADANIGREEN", name: "Adani Green Energy", sector: "Power/Utilities" },
+  { id: "RPOWER", name: "Reliance Power", sector: "Power/Utilities" },
+  // --- Gas Distribution ---
+  { id: "GUJGASLTD", name: "Gujarat Gas", sector: "Gas Distribution" },
+  { id: "IGL", name: "Indraprastha Gas", sector: "Gas Distribution" },
+  // --- Specialty Chemicals ---
+  { id: "AARTIIND", name: "Aarti Industries", sector: "Specialty Chemicals" },
+  // --- Textiles ---
+  { id: "GARFIBRES", name: "Garware Technical Fibres", sector: "Textiles" },
+  // --- Jewellery ---
+  { id: "RAJESHEXPO", name: "Rajesh Exports", sector: "Jewellery" },
+  // --- Footwear ---
+  { id: "RELAXO", name: "Relaxo Footwears", sector: "Footwear" },
+  // --- Media ---
   { id: "ZEEL", name: "Zee Entertainment", sector: "Media" },
-  { id: "TATASTEEL", name: "Tata Steel", sector: "Metals/Energy" },
-  { id: "COALINDIA", name: "Coal India", sector: "Metals/Energy" },
-  { id: "IOC", name: "Indian Oil Corporation", sector: "Metals/Energy" },
+  // --- Infra/Cement ---
+  { id: "JPASSOCIAT", name: "Jaiprakash Associates", sector: "Infra/Cement" },
+  // --- Fintech ---
+  { id: "PAYTM", name: "Paytm (One97 Communications)", sector: "Fintech" },
 ];
 
 // Display order of sectors on the landing page / filters.
 export const SECTOR_ORDER = [
-  "IT",
-  "Banking",
-  "NBFC",
-  "FMCG Large",
-  "FMCG Small",
-  "Consumer",
-  "Pharma Large",
-  "Pharma Mid",
-  "Auto",
-  "Capital Goods",
-  "Industrial",
-  "Pipes/Plastics",
-  "Specialty Chem",
-  "Logistics",
-  "Utilities PSU",
-  "Metals/Energy",
-  "Telecom",
+  "Banks",
+  "NBFC/Financial Services",
+  "IT Services",
+  "Pharma/Biotech",
+  "FMCG",
+  "Beverages",
+  "Consumer Durables",
+  "Industrials/Building Materials",
+  "Energy/Oil & Gas",
+  "Power/Utilities",
+  "Gas Distribution",
+  "Specialty Chemicals",
+  "Textiles",
+  "Jewellery",
+  "Footwear",
   "Media",
+  "Infra/Cement",
+  "Fintech",
 ];
 
 const BY_ID = new Map(STOCKS.map((s) => [s.id, s]));
@@ -100,8 +129,16 @@ export function hasNoPeers(id: string): boolean {
 
 // Custom note for standalone (single-member-sector) stocks.
 const PEER_NOTE: Record<string, string> = {
-  TORNTPHARM:
-    "No direct mid-cap pharma peer in this list — compare against the large-cap pharma names (Sun Pharma, Cipla, Dr Reddy's, Divi's).",
+  VBL: "No other listed beverages bottler in this universe — read Varun Beverages against the broader FMCG names for a consumer-staples reference.",
+  GARFIBRES:
+    "No direct technical-textiles peer in this list — compare against the broader industrials/building-materials names.",
+  AARTIIND:
+    "No other specialty-chemicals name in this list — judge on its own FY2021 fundamentals.",
+  RAJESHEXPO: "No other jewellery name in this list.",
+  RELAXO: "No other footwear name in this list.",
+  ZEEL: "No other media name in this list.",
+  JPASSOCIAT: "No other infrastructure/cement name in this list.",
+  PAYTM: "No other fintech name in this list.",
 };
 export function peerNote(id: string): string {
   return PEER_NOTE[id] ?? "No direct peer in this list.";

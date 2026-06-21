@@ -51,9 +51,9 @@ export interface PortfolioResult {
   rating: number; // 1–10
 }
 
-// Canonical monthly grid June 2021 – June 2026 (all 35 stocks share it).
+// Canonical monthly grid June 2021 – June 2026 (all stocks share it).
 function monthGrid(): string[] {
-  const ref = getSimPrices("TCS");
+  const ref = getSimPrices("HDFCBANK");
   return ref.map((p) => p.date);
 }
 

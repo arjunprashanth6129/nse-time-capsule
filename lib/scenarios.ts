@@ -23,7 +23,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 50000,
     capexLabel: "Rs. 50,000",
     accent: "#3b5bdb",
-    ideal: ["TCS", "ICICIBANK", "POLYCAB", "GHCL", "FINOLEXIND"],
+    ideal: ["RELIANCE", "HCLTECH", "BAJFINANCE", "VBL", "COFORGE"],
   },
   {
     id: "newly-married",
@@ -33,7 +33,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 200000,
     capexLabel: "Rs. 2,00,000",
     accent: "#7048e8",
-    ideal: ["HDFCBANK", "BHARTIARTL", "ABB", "TORNTPHARM", "SUPREMEIND"],
+    ideal: ["HDFCBANK", "BAJAJFINSV", "SUPREMEIND", "DIVISLAB", "TECHM"],
   },
   {
     id: "young-family",
@@ -43,7 +43,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 300000,
     capexLabel: "Rs. 3,00,000",
     accent: "#e8830c",
-    ideal: ["HINDUNILVR", "ASIANPAINT", "MARUTI", "MARICO", "CONCOR"],
+    ideal: ["NESTLEIND", "MARICO", "HAVELLS", "ASTRAL", "TATACONSUM"],
   },
   {
     id: "pre-retirement",
@@ -53,7 +53,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 500000,
     capexLabel: "Rs. 5,00,000",
     accent: "#d6455e",
-    ideal: ["TCS", "ITC", "NESTLEIND", "CIPLA", "POWERGRID"],
+    ideal: ["ITC", "INFY", "CIPLA", "KOTAKBANK", "GRINDWELL"],
   },
   {
     id: "elderly-retired",
@@ -63,7 +63,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 100000,
     capexLabel: "Rs. 1,00,000",
     accent: "#2f9e7f",
-    ideal: ["HINDUNILVR", "NTPC", "POWERGRID", "BAJAJAUTO", "KOTAKBANK"],
+    ideal: ["ITC", "NESTLEIND", "BPCL", "HCLTECH", "COLPAL"],
   },
 ];
 

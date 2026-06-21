@@ -36,7 +36,9 @@ yarn-error.log*
 
 # data-fetch scrape cache + python venv
 /scripts/cache/
+/data/cache/
 .nse-venv/
+.screen-venv/
 
 # vercel
 .vercel
