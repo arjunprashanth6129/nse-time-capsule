@@ -52,9 +52,12 @@ export interface PortfolioResult {
 }
 
 // Canonical monthly grid June 2021 – June 2026 (all stocks share it).
+// Derived from the Nifty benchmark series, which is always present and is
+// never part of the tradeable universe — so the grid survives any stock
+// add/removal (avoids the Phase-0 breakage when a referenced ticker like
+// TCS was removed). Verified identical to the per-stock monthly grid.
 function monthGrid(): string[] {
-  const ref = getSimPrices("HDFCBANK");
-  return ref.map((p) => p.date);
+  return getNiftySim().map((p) => p.date);
 }
 
 function priceMap(id: string): Map<string, number> {
