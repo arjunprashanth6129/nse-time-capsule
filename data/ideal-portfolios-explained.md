@@ -63,7 +63,7 @@ Five professionally-constructed model portfolios, one per life-stage scenario, e
 
 | Ticker | Company | Cap | Entry (Jun’21) | Exit (Jun’26) | Return | Weight | Why this stock was picked |
 |---|---|---|---|---|---|---|---|
-| **ITC** | ITC | Large | ₹159.6 | ₹291.15 | +82.4% | 20.3% | Diversified leader — cigarettes plus FMCG foods, hotels and paper. ROE 22%, debt-free, very large operating cash flow and the highest dividend yield in the pool (~10% trailing, timing-aided). Chosen for income and stability. (0% promoter reflects its widely-held, professionally-managed structure — no governance concern.) |
+| **ITC** | ITC | Large | ₹159.6 | ₹291.15 | +82.4% | 20.3% | Diversified leader — cigarettes plus FMCG foods, hotels and paper. ROE 22%, debt-free, very large operating cash flow and the highest dividend yield in the pool (~10% trailing, timing-aided). Chosen for income and stability. 
 | **BPCL** | Bharat Petroleum | Large | ₹166.56 | ₹316.3 | +89.9% | 20.3% | State-owned oil refiner and fuel retailer. Combines a high return with quality and income — ROE 32%, very strong operating cash flow (~₹23,500 Cr) and a 4.5% dividend yield. Chosen for growth-plus-income. |
 | **TECHM** | Tech Mahindra | Large | ₹919.46 | ₹1,447.7 | +57.5% | 19.6% | Large IT-services firm with a heavy telecom/communications mix. ROE 17.5%, low debt, and a 3.2% dividend yield. Chosen for income plus growth in the lowest-risk income scenario. |
 | **MARICO** | Marico | Large | ₹499.68 | ₹820.75 | +64.3% | 20.3% | FMCG company built on Parachute and Saffola. A steady consumer compounder — ROE 37%, low debt (D/E 0.16), 1.4% dividend yield. Chosen for low-volatility stability and modest income. |
