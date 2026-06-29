@@ -32,13 +32,17 @@ export default function ScreenerLanding() {
       <Header />
       <main className="mx-auto max-w-6xl px-4 py-8">
         <div className="mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">
-            Stock Screener · June 2021
+          <div className="text-xs font-semibold uppercase tracking-wide text-[var(--color-brand)]">
+            Stock Screener
+          </div>
+          <h1 className="mt-1 text-2xl font-bold text-gray-900 sm:text-3xl">
+            {STOCKS.length} NSE stocks, as they looked in June 2021
           </h1>
-          <p className="mt-1 text-sm text-gray-600">
-            All {STOCKS.length} companies as they looked in June 2021. Filter by
-            sector or market-cap category, then open a company for its full
-            time-capsule page. Nothing here shows data beyond June 2021.
+          <p className="mt-2 max-w-2xl text-sm text-gray-600">
+            Browse the universe at its starting point for the simulation. Each
+            company opens to a full time-capsule page — snapshot ratios,
+            FY2015–FY2021 financials, a long-term price chart and peer
+            comparison. Nothing here shows data beyond June 2021.
           </p>
         </div>
         <ScreenerGrid rows={rows} />

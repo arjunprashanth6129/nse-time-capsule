@@ -147,12 +147,17 @@ export default async function StockDetail({
     <>
       <Header />
       <main className="mx-auto max-w-5xl px-4 py-6">
-        <Link
-          href="/screener"
-          className="text-sm text-gray-500 hover:text-[var(--color-brand)]"
-        >
-          ← All stocks
-        </Link>
+        <nav className="flex items-center gap-1.5 text-sm text-gray-500">
+          <Link href="/" className="hover:text-[var(--color-brand)]">
+            Home
+          </Link>
+          <span className="text-gray-300">/</span>
+          <Link href="/screener" className="hover:text-[var(--color-brand)]">
+            Screener
+          </Link>
+          <span className="text-gray-300">/</span>
+          <span className="font-medium text-gray-700">{meta.name}</span>
+        </nav>
 
         {/* ---- Header ---- */}
         <section className="mt-3 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
@@ -200,9 +205,11 @@ export default async function StockDetail({
           </div>
 
           {snap.companyBlurb && (
-            <p className="mt-4 text-sm leading-relaxed text-gray-600">
-              {snap.companyBlurb}
-            </p>
+            <div className="mt-4 rounded-lg border-l-2 border-[var(--color-brand)] bg-gray-50 px-4 py-3">
+              <p className="text-sm italic leading-relaxed text-gray-600">
+                {snap.companyBlurb}
+              </p>
+            </div>
           )}
 
           {snap.ipoMonth && (

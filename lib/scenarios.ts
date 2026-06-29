@@ -14,6 +14,7 @@ export interface Scenario {
   capex: number; // ₹
   capexLabel: string;
   accent: string; // hex, matches the printed handout
+  risk: string; // risk-level label shown on the scenario card
 }
 
 export const SCENARIOS: Scenario[] = [
@@ -25,6 +26,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 50000,
     capexLabel: "Rs. 50,000",
     accent: "#3b5bdb",
+    risk: "High risk",
   },
   {
     id: "newly-married",
@@ -34,6 +36,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 200000,
     capexLabel: "Rs. 2,00,000",
     accent: "#7048e8",
+    risk: "Moderate-high risk",
   },
   {
     id: "young-family",
@@ -43,6 +46,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 300000,
     capexLabel: "Rs. 3,00,000",
     accent: "#e8830c",
+    risk: "Moderate risk",
   },
   {
     id: "pre-retirement",
@@ -52,6 +56,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 500000,
     capexLabel: "Rs. 5,00,000",
     accent: "#d6455e",
+    risk: "Lower-moderate risk",
   },
   {
     id: "elderly-retired",
@@ -61,6 +66,7 @@ export const SCENARIOS: Scenario[] = [
     capex: 100000,
     capexLabel: "Rs. 1,00,000",
     accent: "#2f9e7f",
+    risk: "Low risk",
   },
 ];
 

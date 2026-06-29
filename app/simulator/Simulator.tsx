@@ -86,29 +86,36 @@ export default function Simulator({
       {/* Scenario */}
       <section className="rounded-xl border border-slate-800 bg-slate-900 p-5">
         <label className="text-xs font-semibold uppercase tracking-wide text-slate-400">
-          Scenario
+          Choose a scenario
         </label>
-        <div className="mt-2 flex flex-wrap items-center gap-3">
-          <select
-            value={scenarioId}
-            onChange={(e) => {
-              setScenarioId(e.target.value);
-              setResult(null);
-            }}
-            className="rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm text-slate-100 focus:outline-none"
-          >
-            {SCENARIOS.map((s) => (
-              <option key={s.id} value={s.id}>
-                {s.name}
-              </option>
-            ))}
-          </select>
-          <span
-            className="rounded-full px-3 py-1 text-sm font-semibold text-white"
-            style={{ backgroundColor: scenario.accent }}
-          >
-            Capex {scenario.capexLabel}
-          </span>
+        <div className="mt-3 grid gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          {SCENARIOS.map((s) => {
+            const active = s.id === scenarioId;
+            return (
+              <button
+                key={s.id}
+                onClick={() => {
+                  setScenarioId(s.id);
+                  setResult(null);
+                }}
+                className={`rounded-lg border p-3 text-left transition ${
+                  active
+                    ? "border-transparent bg-slate-800 ring-2"
+                    : "border-slate-800 bg-slate-950/40 hover:border-slate-700"
+                }`}
+                style={active ? { boxShadow: `inset 0 0 0 2px ${s.accent}` } : undefined}
+              >
+                <div className="text-sm font-semibold text-slate-100">{s.name}</div>
+                <span
+                  className="mt-2 inline-block rounded-full px-2 py-0.5 text-[10px] font-semibold text-white"
+                  style={{ backgroundColor: s.accent }}
+                >
+                  {s.risk}
+                </span>
+                <div className="mt-1.5 text-[11px] text-slate-500">{s.capexLabel}</div>
+              </button>
+            );
+          })}
         </div>
         <p className="mt-3 text-sm text-slate-400">{scenario.description}</p>
       </section>
@@ -362,28 +369,31 @@ function Stat({
   );
 }
 
-function ScoreCard({ score, accent }: { score: number; accent: string }) {
+function ScoreCard({ score }: { score: number; accent?: string }) {
+  // color gradient: red (1) -> amber (5) -> green (10)
+  const hue = Math.max(0, Math.min(120, (score / 10) * 120));
+  const color = `hsl(${hue} 80% 55%)`;
+  const deg = (score / 10) * 360;
   return (
-    <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-      <div className="text-[11px] uppercase tracking-wide text-slate-500">
+    <div className="flex flex-col items-center justify-center rounded-xl border border-slate-800 bg-slate-900 p-4">
+      <div className="self-start text-[11px] uppercase tracking-wide text-slate-500">
         Final score
       </div>
-      <div className="mt-1 flex items-baseline gap-1">
-        <span className="tnum text-2xl font-bold" style={{ color: accent }}>
-          {score}
-        </span>
-        <span className="text-sm text-slate-500">/10</span>
+      <div
+        className="relative mt-2 grid h-24 w-24 place-items-center rounded-full"
+        style={{
+          background: `conic-gradient(${color} ${deg}deg, #1e293b 0deg)`,
+        }}
+      >
+        <div className="grid h-[78px] w-[78px] place-items-center rounded-full bg-slate-900">
+          <span className="tnum text-3xl font-extrabold" style={{ color }}>
+            {score}
+          </span>
+        </div>
       </div>
-      <div className="mt-1.5 flex gap-0.5">
-        {Array.from({ length: 10 }, (_, i) => (
-          <span
-            key={i}
-            className="h-1.5 flex-1 rounded-full"
-            style={{ backgroundColor: i < Math.round(score) ? accent : "#1e293b" }}
-          />
-        ))}
+      <div className="mt-2 text-xs font-semibold" style={{ color }}>
+        {SCORE_LABEL(score)} · {score}/10
       </div>
-      <div className="mt-1 text-[11px] text-slate-500">{SCORE_LABEL(score)}</div>
     </div>
   );
 }

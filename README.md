@@ -1,88 +1,165 @@
-# NSE Time Capsule — June 2021
+# MarketMind — Financial Literacy Simulator
 
-A two-part **financial-literacy teaching tool** for an Indian-stocks (NSE) classroom exercise, built as a single Next.js app.
+[![Live Demo](https://img.shields.io/badge/Live-Demo-000?logo=vercel)](https://nse-time-capsule.vercel.app)
+[![Next.js](https://img.shields.io/badge/Next.js-App_Router-000?logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Python](https://img.shields.io/badge/Python-data_pipeline-3776ab?logo=python&logoColor=white)](https://www.python.org)
+[![Vercel](https://img.shields.io/badge/Deployed-Vercel-000?logo=vercel)](https://vercel.com)
 
-- **Part 1 — `/screener` (public):** a screener.in-style company page for each of **40 NSE stocks, frozen at June 2021**. Snapshot ratios, year-by-year financials, a Jan 2000 – June 2021 price chart, and peer comparison. Participants get a genuine "track record" view and **see nothing beyond June 2021** before they pick.
-- **Part 2 — `/simulator` (host only, password-protected):** pick a life scenario, enter a team's 5-stock portfolio, and reveal **indexed performance over June 2021 → June 2026** with a Nifty 50 overlay, a 1–10 rating, and a per-holding breakdown.
+**Live:** https://nse-time-capsule.vercel.app
 
-> **Everything uses a FIXED, reproducible window — Jan 2000 to June 2026 — anchored to a fixed June-2026 reference date.** Nothing is "live"/"today"; results never change with the calendar. Prices are split/bonus-adjusted so the screener entry price and the simulator returns stay internally consistent.
+A full-stack backtesting simulator that teaches **fundamental analysis** through
+hands-on portfolio construction, built on **independently-verified** NSE
+historical data.
 
 ---
 
-## Local setup
+## Overview
+
+Most financial-literacy tools either show you a textbook or let you gamble with
+fake money. MarketMind does something more rigorous: it freezes the Indian
+market at **June 2021**, lets a learner research 50 real companies exactly as
+they looked then (no hindsight), and then has them build a portfolio for a
+specific life situation — a fresh graduate, a young family, a retired couple.
+The portfolio is **backtested against real June 2021 → June 2026 prices** and
+scored on two axes: how it actually performed *and* the fundamental quality of
+what was picked.
+
+The interesting engineering problem isn't the UI — it's the **data integrity**.
+Indian stocks over this window went through splits, bonus issues, and even a
+full corporate demerger (Tata Motors). A naive price fetch produces returns that
+are silently wrong by 50–90%. Every number in this app was recomputed from
+split/bonus-adjusted data and cross-checked, then frozen into a static layer so
+the results are perfectly reproducible.
+
+It was built for, and delivered as, a live **Financial Literacy Project** teaching
+session — the simulator is the host-run "reveal" at the end where each team sees
+how their picks did.
+
+## Features
+
+- **Stock screener** (`/screener`) — 50 NSE companies as of June 2021: snapshot
+  ratios, FY2015–FY2021 annual financials, a 20-year price chart, peer
+  comparison, and a neutral company write-up. No data leaks past June 2021, so
+  participants get a genuine "track record" view before they choose.
+- **Portfolio simulator** (`/simulator`, host-gated) — pick a scenario, build a
+  5-stock portfolio within a capital budget, and reveal indexed performance vs
+  the scenario's *ideal portfolio* and the Nifty 50, plus a 0–10 score.
+- **Dual scoring engine** — 50% performance (vs the ideal portfolio), 50%
+  fundamental quality (a transparent per-stock rubric).
+- **5 verified ideal portfolios** — one per scenario, each constructed from a
+  screened "eligible pool" and each verified to beat the Nifty 50.
+- **Reproducible data pipeline** — Python scripts fetch, verify, and freeze the
+  entire dataset into static JSON.
+
+## Architecture
+
+```
+   Data Pipeline (Python)          Static JSON Layer           Next.js Frontend            Vercel
+ ┌────────────────────────┐     ┌────────────────────┐     ┌─────────────────────┐     ┌──────────┐
+ │ yfinance (auto_adjust)  │ ──▶ │ prices.json         │ ──▶ │ /                   │     │  SSG: 50 │
+ │ screener.in (cached)    │     │ financials.json     │     │ /screener  (SSG)    │ ──▶ │  stock   │
+ │ corporate-action fixes  │     │ snapshot-2021.json  │     │ /screener/[ticker]  │     │  pages   │
+ │ eligibility + portfolio │     │ ideal-portfolios.json│    │ /simulator (SSR)    │     │  + edge  │
+ │ construction            │     │ nifty.json          │     │ /api/stats (server) │     │  funcs   │
+ └────────────────────────┘     └────────────────────┘     └─────────────────────┘     └──────────┘
+        (run once)                  (committed, frozen)        scoring: TypeScript          deploy
+```
+
+The ideal-portfolio data is **server-only** (read solely by the scoring action)
+so the "answer key" never ships to the client.
+
+## Data Methodology
+
+- **Prices** — `yfinance` with `auto_adjust=True`, which back-adjusts for splits
+  and bonus issues. Without it, a 5:1 split reads as an 80% crash. Demergers
+  (e.g. Tata Motors → TMPV + TMCV, 2025) aren't covered by auto-adjust and were
+  reconstructed by hand so a buy-and-hold holder's true outcome is represented.
+- **Fundamentals** — scraped from screener.in (FY2015–FY2021) with a 2-second
+  rate limit and on-disk HTML caching; 10 metrics stored per stock.
+- **Benchmark** — Nifty 50 (`^NSEI`) returned **+53.7%** over the window; this is
+  the line every portfolio is measured against.
+- **Why static JSON, not a live database** — the dataset is fixed at June 2021,
+  so a runtime DB or API adds latency, keys, and non-determinism for zero
+  benefit. Pre-computed JSON is faster, free to host, and fully reproducible.
+
+Full write-up: **[/methodology](https://nse-time-capsule.vercel.app/methodology)**.
+
+## Scoring System
+
+```
+Final Score (0–10) = 0.5 × Performance + 0.5 × Fundamentals
+```
+
+**Performance (0–10)** — participant return vs the scenario's ideal-portfolio
+return, both indexed to 100 at June 2021:
+
+```
+relative = participant_return / ideal_return
+10 if relative >= 1.0   (capped)      0 if the portfolio lost money
+ 9 if 0.90–0.99   ...   1 if 0–0.19
+```
+
+**Fundamentals (0–10)** — averaged over the chosen holdings:
+
+| Metric | Points |
+|---|---|
+| ROE | >25% = 3 · 15–25% = 2 · 5–15% = 1 · else 0 |
+| Debt / Equity | <0.3 = 2 · 0.3–1.0 = 1 · >1.0 = 0 (banks/NBFC: 1 if ROE+CFO healthy) |
+| Cash flow from ops | positive = 2 · negative = 0 |
+| Revenue/profit consistency | both CAGR +ve & EPS tracks profit = 2 · partial = 1 · declining = 0 |
+| Promoter holding | >50% = 1 · 25–50% = 0.5 · <25% / none = 0 |
+
+A deliberate "trap" stock scores **0** on the fundamental component regardless of
+the rubric. The 50/50 split teaches that a good *outcome* and a good *process*
+are different things.
+
+## Tech Stack
+
+| Layer | Choice | Rationale |
+|---|---|---|
+| Frontend | Next.js (App Router), TypeScript | SSG for the 50 stock pages; type-safety across the data layer |
+| Styling | Tailwind CSS | utility-first, zero component-library bloat |
+| Charts | Recharts | declarative SVG line/area charts |
+| Data pipeline | Python — yfinance, BeautifulSoup, pandas | best ecosystem for market data + scraping |
+| Data store | Static JSON | dataset is fixed at June 2021 → a DB adds complexity with no benefit; static files are faster and reproducible |
+| Deployment | Vercel | first-class Next.js SSG/SSR + edge functions |
+
+## Project Impact
+
+Built for and delivered as a live **Financial Literacy Project** session: teams
+researched companies on the screener, constructed portfolios for assigned
+investor personas, and the host revealed their backtested performance and score
+live — teaching fundamental analysis through real outcomes rather than theory.
+
+## Local Setup
 
 ```bash
+git clone https://github.com/arjunprashanth6129/nse-time-capsule
+cd nse-time-capsule
 npm install
-cp .env.example .env.local      # then set SIMULATOR_PASSWORD
+cp .env.example .env.local      # set SIMULATOR_PASSWORD for the host gate
 npm run dev                     # http://localhost:3000
 ```
 
-- `/` — landing page
-- `/screener` — public screener (all 40 stocks + per-stock detail)
-- `/simulator` — host-only; unlock with `SIMULATOR_PASSWORD`
+| Env var | Purpose |
+|---|---|
+| `SIMULATOR_PASSWORD` | shared password gating the host-only `/simulator` page |
 
-Production build: `npm run build && npm start`.
+## Data Pipeline
 
-## Environment variables
-
-| Variable | Purpose |
-| --- | --- |
-| `SIMULATOR_PASSWORD` | Shared password gating `/simulator`. Set in `.env.local` locally and in Vercel project settings for production. |
-
-## Routes
-
-| Route | Access | What it shows |
-| --- | --- | --- |
-| `/screener` | Public | Filterable grid of 40 stocks (sector / market-cap / search) |
-| `/screener/[ticker]` | Public | Header chips, Jan 2000–June 2021 price chart, P&L (FY2015–21) with CAGR rows + EPS-consistency note, cash-flow table, peer comparison |
-| `/simulator` | Password | Scenario selector, 5-slot portfolio entry with live budget, indexed performance chart + Nifty overlay, 1–10 rating, holdings breakdown |
-| `/api/simulator/login`, `/api/simulator/logout` | — | Cookie session for the gate |
-
-## Data layer (`/data`, static JSON)
-
-| File | Contents |
-| --- | --- |
-| `prices.json` | `id → [{date:"YYYY-MM", close}]` — monthly closes, Jan 2000 – June 2026, split/bonus-adjusted |
-| `nifty.json` | Nifty 50 (`^NSEI`) monthly closes (Yahoo history begins 2007; the simulator only needs 2021+) |
-| `financials.json` | `id → {FY2015..FY2021 → {revenue, netProfit, eps, cfo}}` |
-| `snapshot-2021.json` | `id → {price, marketCap(+category), pe, divYield, roe, de, promoterHolding, opm, …}` for June 2021 |
-| `missing-data-report.md` | Per-field coverage / gaps, for manual review |
-
-### Re-running the data-fetch scripts
-
-The data is committed, so the app runs without re-fetching. To regenerate it:
+The Python scripts (repo root) regenerate the static data layer. They require a
+virtualenv with `yfinance`, `pandas`, `beautifulsoup4`, `lxml`, `requests`:
 
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install yfinance requests beautifulsoup4 lxml
-
-cd scripts
-python fetch_prices.py        # prices.json + nifty.json  (yfinance)
-python fetch_financials.py    # screener.in -> data/screener_raw.json (+ caches HTML to scripts/cache/)
-python build_snapshot.py      # financials.json + snapshot-2021.json + missing-data-report.md
+python yf_fetch.py            # adjusted prices, returns, splits, shares, dividends
+python screener_fetch.py      # screener.in FY2015–FY2021 fundamentals (cached)
+python build_financials.py    # -> data/financials.json
+python build_snapshot.py      # -> data/snapshot-2021.json
+python fetch_prices.py        # monthly adjusted series -> data/prices.json + nifty.json
+python build_portfolios.py    # eligibility screen + 5 ideal portfolios
 ```
 
-`scripts/stocks.py` is the single source of truth for the 40 tickers (mirrored in `lib/stocks.ts`). The scraper respects rate limits (1.5 s delays) and caches each response so re-runs don't re-fetch.
+## License
 
-## Data coverage (honest notes)
-
-- **Universe:** 40 NSE stocks — 34 fundamentally strong + **6 deliberate weak/"trap" picks** (IDEA, ZEEL, YESBANK, TATASTEEL, COALINDIA, IOC). The UI **never** labels which is which (same cards, same layout) — students must read the FA data to spot the weak ones. The simulator (host-only) stores a model "ideal 5" per scenario, drawn only from the strong names.
-- **Prices:** 100% real for all 40 stocks + Nifty (yfinance), monthly. Some series begin at the real listing date (POLYCAB 2019, GRINDWELL 2006, PAGEIND 2007). FINOLEXIND uses Yahoo/screener symbol **FINPIPE** (Finolex Industries).
-- **Annual financials FY2015–FY2021:** real (screener.in), full 7-year table. **ABB India** reports on a December fiscal year, so its "FY2021" column = calendar 2021.
-- **June-2021 snapshot ratios:** real — derived from FY2021 screener financials + the real split/bonus-adjusted June-2021 close (P/E, market cap, dividend yield, ROE, D/E). FY2021 loss-makers (IDEA, YESBANK, Bharti Airtel) correctly show no P/E but still get a market cap (computed as price × shares); banks show no meaningful D/E. **Vodafone Idea (IDEA)** has **negative net worth** in FY2021, so D/E shows "N/A (negative equity)" and ROE is blank — itself a red flag.
-- **Market-cap bands (June 2021):** Large ≥ ₹20,000 Cr (Blue), Mid ₹5,000–20,000 Cr (Purple), Small ₹500–5,000 Cr (Orange), Micro < ₹500 Cr (Red). Result: 36 Large, 3 Mid, 1 Small.
-- **Promoter holding:** screener's free shareholding table only reaches ~FY2023, so the earliest available figure is shown as a labelled proxy (ZEEL's low promoter holding is genuine).
-- **Gross margin:** not exposed by screener; **OPM% (operating margin)** is shown as the available margin metric.
-
-See `data/missing-data-report.md` for the per-stock breakdown.
-
-## Deploy to Vercel
-
-1. Push to GitHub (done).
-2. Import the repo at [vercel.com/new](https://vercel.com/new) — it auto-detects Next.js, no special config.
-3. Add **`SIMULATOR_PASSWORD`** under **Settings → Environment Variables**.
-4. Deploy. `/screener` is public; `/simulator` requires the password.
-
-## Tech stack
-
-Next.js 16 (App Router) · TypeScript · Tailwind CSS v4 · recharts · static JSON data · cookie-based password gate. No database.
+MIT

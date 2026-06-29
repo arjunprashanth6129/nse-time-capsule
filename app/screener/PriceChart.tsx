@@ -5,6 +5,7 @@ import {
   Area,
   AreaChart,
   CartesianGrid,
+  ReferenceLine,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -76,6 +77,20 @@ export default function PriceChart({ data }: { data: Pt[] }) {
             domain={["auto", "auto"]}
           />
           <Tooltip content={<TooltipBox />} />
+          {data.length > 0 && (
+            <ReferenceLine
+              x={data[data.length - 1].date}
+              stroke="#2451b3"
+              strokeDasharray="4 3"
+              strokeOpacity={0.5}
+              label={{
+                value: "June 2021 · sim start",
+                position: "insideTopRight",
+                fill: "#2451b3",
+                fontSize: 10,
+              }}
+            />
+          )}
           <Area
             type="monotone"
             dataKey="close"
