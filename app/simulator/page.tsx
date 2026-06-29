@@ -32,7 +32,7 @@ export default async function SimulatorPage() {
       <header className="border-b border-slate-800">
         <div className="mx-auto flex max-w-4xl items-center gap-3 px-4 py-3">
           <Link href="/" className="font-semibold text-slate-100">
-            NSE Time Capsule
+            MarketMind
           </Link>
           <span className="rounded-full bg-slate-800 px-2 py-0.5 text-xs text-slate-400">
             Simulator · host only

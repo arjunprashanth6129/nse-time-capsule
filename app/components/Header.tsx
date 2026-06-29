@@ -8,7 +8,7 @@ export default function Header() {
           <span className="grid h-7 w-7 place-items-center rounded-md bg-[var(--color-brand)] text-sm font-bold text-white">
             ₹
           </span>
-          NSE Time Capsule
+          MarketMind: NSE Time Capsule
         </Link>
         <span className="hidden rounded-full bg-amber-100 px-2 py-0.5 text-xs font-medium text-amber-800 sm:inline">
           as of June 2021
