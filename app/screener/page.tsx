@@ -4,7 +4,7 @@ import { getSnapshot } from "@/lib/data";
 import ScreenerGrid, { type ScreenerRow } from "./ScreenerGrid";
 
 export const metadata = {
-  title: "Screener — 50 NSE stocks as of June 2021",
+  title: "Screener - 50 NSE stocks as of June 2021",
 };
 
 export default function ScreenerLanding() {
@@ -23,7 +23,7 @@ export default function ScreenerLanding() {
       de: snap?.debtToEquity ?? null,
     };
   });
-  // Default order: market cap descending — a natural screener feel that
+  // Default order: market cap descending - a natural screener feel that
   // interleaves strong and weak picks (the UI never flags which is which).
   rows.sort((a, b) => (b.marketCap ?? 0) - (a.marketCap ?? 0));
 
@@ -40,8 +40,8 @@ export default function ScreenerLanding() {
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-gray-600">
             Browse the universe at its starting point for the simulation. Each
-            company opens to a full time-capsule page — snapshot ratios,
-            FY2015–FY2021 financials, a long-term price chart and peer
+            company opens to a full time-capsule page - snapshot ratios,
+            FY2015-FY2021 financials, a long-term price chart and peer
             comparison. Nothing here shows data beyond June 2021.
           </p>
         </div>

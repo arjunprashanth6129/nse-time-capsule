@@ -5,7 +5,7 @@ import { entryPrice } from "@/lib/data";
 import LoginGate from "./LoginGate";
 import Simulator from "./Simulator";
 
-export const metadata = { title: "Portfolio Simulator — host only" };
+export const metadata = { title: "Portfolio Simulator - host only" };
 
 async function isAuthed(): Promise<boolean> {
   const pw = process.env.SIMULATOR_PASSWORD;

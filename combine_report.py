@@ -52,12 +52,12 @@ for t in GOOD+BAD:
     dy=(yd.get("ttm_div_2021")/raw*100) if (yd.get("ttm_div_2021") is not None and raw) else None
     # GPM -> OPM proxy
     gpm=sd.get("opm_2021")
-    if gpm is None: missing.append((t,"GPM (OPM proxy)","screener has no margin row (bank/finance) — gross/operating margin n/a"))
+    if gpm is None: missing.append((t,"GPM (OPM proxy)","screener has no margin row (bank/finance) - gross/operating margin n/a"))
     # CAGRs
     revc=cagr3(sd.get("sales_2021"),sd.get("sales_2018"))
     npc=cagr3(np21,np18)
     if revc is None: missing.append((t,"Revenue 3yr CAGR","base FY2018 sales unavailable (recent IPO / Dec-year truncation)" if sd.get("sales_2018") is None else "non-positive base"))
-    if npc is None: missing.append((t,"Net Profit 3yr CAGR","FY2018 or FY2021 net profit non-positive/unavailable — CAGR not meaningful"))
+    if npc is None: missing.append((t,"Net Profit 3yr CAGR","FY2018 or FY2021 net profit non-positive/unavailable - CAGR not meaningful"))
     epsc=cagr3(eps_sc,eps_sc18)
     # EPS as-reported (screener eps is split-adjusted to current basis -> x split factor)
     eps_disp = (eps_sc*sf) if eps_sc is not None else None
@@ -67,12 +67,12 @@ for t in GOOD+BAD:
     if eps_sc is None or eps_sc18 is None:
         note="EPS history unavailable (recent IPO / fiscal transition)"
     elif np18 is None or np18<=0 or (np21 is not None and np21<0):
-        note="Loss in FY2018 or FY2021 — growth comparison not meaningful"
+        note="Loss in FY2018 or FY2021 - growth comparison not meaningful"
     elif epsc is not None and npc is not None:
         gap=npc-epsc
-        if abs(gap)<2: tag="EPS grew in line with net profit — negligible dilution"
-        elif gap>0: tag=f"EPS CAGR {epsc:.0f}% < net-profit CAGR {npc:.0f}% — share dilution"
-        else: tag=f"EPS CAGR {epsc:.0f}% > net-profit CAGR {npc:.0f}% — buyback/share reduction"
+        if abs(gap)<2: tag="EPS grew in line with net profit - negligible dilution"
+        elif gap>0: tag=f"EPS CAGR {epsc:.0f}% < net-profit CAGR {npc:.0f}% - share dilution"
+        else: tag=f"EPS CAGR {epsc:.0f}% > net-profit CAGR {npc:.0f}% - buyback/share reduction"
         note=tag
     else:
         note="n/a"
@@ -131,13 +131,13 @@ for t in GOOD:
     if c in gcat: gcat[c].append(t)
 
 md=[]
-md.append("# Final Verified Stock Universe — Independent Rebuild")
+md.append("# Final Verified Stock Universe - Independent Rebuild")
 md.append("")
 md.append("**Window:** 30 June 2021 → latest available 2026 trading day. "
           "**Sources:** prices/returns/splits/historical shares/dividends from yfinance "
           "(`auto_adjust=True` for returns); FY2021 (Mar-2021, or Dec-2020 for Dec-fiscal-year "
           "companies) fundamentals scraped from screener.in (consolidated where available). "
-          "Every number recomputed from source — nothing carried over from prior reports.")
+          "Every number recomputed from source - nothing carried over from prior reports.")
 md.append("")
 md.append(f"- **2026 price date used:** {nifty['adj_2026_date']} (latest available; 2026 fiscal year incomplete).")
 md.append(f"- **Market cap basis:** true Jun-2021 market cap = (split-adjusted Jun-2021 price × cumulative "
@@ -154,7 +154,7 @@ md.append(f"- **ROE** = FY2021 net profit ÷ FY2021 year-end equity (equity capi
           "(deposit-funded), so D/E is marked n/a.")
 md.append("- **Dividend yield** = sum of dividends with ex-date in the trailing 12 months to 30-Jun-2021 ÷ Jun-2021 "
           "price. A few names (ITC, BRITANNIA) read high because COVID-delayed FY2020 final dividends and special "
-          "dividends fell inside that 12-month window — it is a true ex-date TTM figure but timing-distorted; the "
+          "dividends fell inside that 12-month window - it is a true ex-date TTM figure but timing-distorted; the "
           "steady-state yield is lower.")
 md.append("")
 md.append("## 3. Verified Nifty 50 (^NSEI) benchmark")
@@ -165,11 +165,11 @@ md.append(f"| Nifty 50 (^NSEI) | {nifty['adj_2021']:,.1f} | {nifty['adj_2026']:,
 md.append("")
 md.append(f"> Benchmark to beat: **+{nifty['return_pct']}%** over the five-year window.")
 md.append("")
-md.append('## 1. "Good" list — 40 stocks (every column from own fetch)')
+md.append('## 1. "Good" list - 40 stocks (every column from own fetch)')
 md.append("")
 md.append(render(GOOD))
 md.append("")
-md.append('## 2. "Bad" list — 10 stocks')
+md.append('## 2. "Bad" list - 10 stocks')
 md.append("")
 md.append(render(BAD))
 md.append("")
@@ -178,20 +178,20 @@ md.append("")
 md.append("### 4a. \"Good\" list stocks with NEGATIVE total return (candidates to reconsider)")
 if good_neg:
     for t in good_neg:
-        md.append(f"- **{t}** ({rows[t]['name']}): **{rows[t]['ret']}%** — underperformed; trailed Nifty by "
+        md.append(f"- **{t}** ({rows[t]['name']}): **{rows[t]['ret']}%** - underperformed; trailed Nifty by "
                   f"{rows[t]['ret']-nifty['return_pct']:.0f} pts. Sits in the \"Good\" list on fundamentals/quality "
                   "but its 5-yr price return is negative.")
 else:
     md.append("- None.")
 md.append("")
 md.append("### 4b. \"Bad\" list stocks with POSITIVE total return (candidates to reassign)")
-md.append("- None — all 10 \"Bad\" list names posted negative 5-yr returns (range "
+md.append("- None - all 10 \"Bad\" list names posted negative 5-yr returns (range "
           f"{min(rows[t]['ret'] for t in BAD)}% to {max(rows[t]['ret'] for t in BAD)}%). The bad list is internally consistent.")
 md.append("")
-md.append("### 4c. Implausible / extreme outliers (>+200% or <−90%) — manual review")
+md.append("### 4c. Implausible / extreme outliers (>+200% or <−90%) - manual review")
 for t in outliers:
     r=rows[t]
-    md.append(f"- **{t}** {r['ret']}% — reviewed: corporate actions = {corp_actions(r)}. "
+    md.append(f"- **{t}** {r['ret']}% - reviewed: corporate actions = {corp_actions(r)}. "
               "auto_adjust handles the split math; return verified against split-adjusted series (genuine multibagger, not a data error).")
 if not outliers: md.append("- None.")
 md.append("")
@@ -201,10 +201,10 @@ md.append(f"YESBANK price return is **+{yb['ret']}%**, but FY2021 fundamentals a
           "still digesting its 2020 reconstruction:")
 md.append("")
 md.append(f"- FY2021 **net profit = ₹{ybs['np_2021']:,.0f} Cr (a LOSS)**; EPS = ₹{ybs['eps_2021']} (negative).")
-md.append(f"- **ROE FY2021 ≈ {yb['roe']:.1f}%** (negative — loss over positive equity).")
-md.append(f"- **Promoter holding ≈ {ybs['promoter_2021']}%** — effectively no promoter; SBI-led investor consortium "
+md.append(f"- **ROE FY2021 ≈ {yb['roe']:.1f}%** (negative - loss over positive equity).")
+md.append(f"- **Promoter holding ≈ {ybs['promoter_2021']}%** - effectively no promoter; SBI-led investor consortium "
           "holds the reconstruction stake.")
-md.append(f"- Revenue FY2021 ₹{ybs['sales_2021']:,.0f} Cr vs FY2018 ₹{ybs['sales_2018']:,.0f} Cr — flat/declining topline.")
+md.append(f"- Revenue FY2021 ₹{ybs['sales_2021']:,.0f} Cr vs FY2018 ₹{ybs['sales_2018']:,.0f} Cr - flat/declining topline.")
 md.append("- D/E: n/a (deposit-funded bank).")
 md.append("")
 md.append("> **Verdict:** the +88% price move is a **low-base recovery bounce off the post-collapse 2020 price, not "
@@ -216,19 +216,19 @@ md.append("")
 md.append(f"| Category | Count | Tickers |")
 md.append("|---|---|---|")
 for c in ["Large","Mid","Small"]:
-    md.append(f"| {c} | {len(gcat[c])} | {', '.join(gcat[c]) or '—'} |")
+    md.append(f"| {c} | {len(gcat[c])} | {', '.join(gcat[c]) or '-'} |")
 md.append("")
 small_n=len(gcat["Small"]); mid_n=len(gcat["Mid"])
 md.append(f"> **Small-cap (<₹5,000 Cr) count = {small_n}.** "
-          + ("**FLAG: small-cap representation is thin (<6–8).** " if small_n<6 else "")
-          + f"Mid-cap (₹5–20k Cr) = {mid_n}. "
+          + ("**FLAG: small-cap representation is thin (<6-8).** " if small_n<6 else "")
+          + f"Mid-cap (₹5-20k Cr) = {mid_n}. "
           "If you want richer small-cap growth scenarios, consider swapping in a few more verified small-cap names "
-          "with positive returns and solid fundamentals — **not done automatically; flagged for your decision.**")
+          "with positive returns and solid fundamentals - **not done automatically; flagged for your decision.**")
 md.append("")
 md.append("### 4f. Note on \"Good\" list names sitting in Large-cap value/quality bucket")
 md.append("Several \"Good\" names are large, lower-beta compounders that *underperformed or roughly matched* Nifty over "
           "this specific window (e.g. HDFCBANK +12%, KOTAKBANK +19%, DRREDDY +21%, BIOCON +3%, INFY −18%). They are "
-          "quality businesses but were not the window's price winners — relevant when building \"good fundamentals ≠ "
+          "quality businesses but were not the window's price winners - relevant when building \"good fundamentals ≠ "
           "guaranteed good return\" teaching scenarios.")
 md.append("")
 os.makedirs("data",exist_ok=True)
@@ -249,7 +249,7 @@ for t,fld,note in missing:
 for fld in sorted(byfield):
     mm.append(f"## {fld}")
     for t,note in byfield[fld]:
-        mm.append(f"- **{t}** — {note}")
+        mm.append(f"- **{t}** - {note}")
     mm.append("")
 mm.append("## Global substitution note: Gross Profit Margin")
 mm.append("screener.in's standard P&L lumps all operating expenses into one line and does **not** publish a separate "

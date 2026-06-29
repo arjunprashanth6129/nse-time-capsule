@@ -1,4 +1,4 @@
-// The 5 portfolio-building scenarios — CLIENT-SAFE metadata only.
+// The 5 portfolio-building scenarios - CLIENT-SAFE metadata only.
 // Names + descriptions per the project spec; capex + accent colours mirror the
 // FLP "Team Scenarios" handout.
 //

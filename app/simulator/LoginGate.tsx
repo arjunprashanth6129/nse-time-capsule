@@ -43,7 +43,7 @@ export default function LoginGate({ configured }: { configured: boolean }) {
         </div>
         <h1 className="text-xl font-bold text-slate-100">Portfolio Simulator</h1>
         <p className="mt-2 text-sm text-slate-400">
-          Host-only access — for session facilitator use. Enter the shared host
+          Host-only access - for session facilitator use. Enter the shared host
           password to run the backtest.
         </p>
         {!configured && (

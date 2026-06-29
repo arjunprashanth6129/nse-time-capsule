@@ -65,7 +65,7 @@ def num(s):
     if s is None:
         return None
     s = s.replace(",", "").replace("%", "").strip()
-    if s in ("", "-", "â\x80\x94", "—"):
+    if s in ("", "-", "â\x80\x94", "-"):
         return None
     neg = s.startswith("-")
     s = re.sub(r"[^0-9.]", "", s)

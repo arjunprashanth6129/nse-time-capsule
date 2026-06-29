@@ -145,7 +145,7 @@ export default function Simulator({
                   onChange={(e) => setSlot(i, { id: e.target.value })}
                   className="min-w-0 flex-1 rounded-md border border-slate-700 bg-slate-800 px-2 py-2 text-sm text-slate-100 focus:outline-none"
                 >
-                  <option value="">— select stock —</option>
+                  <option value="">- select stock -</option>
                   {stocks.map((s) => (
                     <option key={s.id} value={s.id}>
                       {s.name} ({s.id})
@@ -235,7 +235,7 @@ export default function Simulator({
             <ScoreCard score={result.finalScore} accent={scenario.accent} />
           </div>
 
-          {/* Score breakdown — Final = Performance×0.5 + Fundamentals×0.5 */}
+          {/* Score breakdown - Final = Performance×0.5 + Fundamentals×0.5 */}
           <div className="rounded-xl border border-slate-800 bg-slate-900 p-5">
             <div className="mb-3 flex items-baseline justify-between">
               <h2 className="font-semibold text-slate-100">Score breakdown</h2>
@@ -325,7 +325,7 @@ export default function Simulator({
                         }`}
                       >
                         {h.fundamentalScore == null
-                          ? "—"
+                          ? "-"
                           : `${num(h.fundamentalScore, 1)}/10`}
                       </td>
                     </tr>

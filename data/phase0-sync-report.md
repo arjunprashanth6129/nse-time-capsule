@@ -1,4 +1,4 @@
-# Phase 0 — Stock Universe Sync Report
+# Phase 0 - Stock Universe Sync Report
 
 **Goal:** replace the app's outdated stock universe with the final verified
 50-stock list (40 Good + 10 Bad) and the verified June 2021 → June 2026 dataset.
@@ -8,10 +8,10 @@ builds cleanly (Next.js 16, all 58 static pages generated, TypeScript passes).
 
 ---
 
-## 1. Final count — 40 Good + 10 Bad = 50 stocks
+## 1. Final count - 40 Good + 10 Bad = 50 stocks
 
 `data/prices.json`, `data/financials.json`, and `data/snapshot-2021.json` each
-contain **exactly the 50 authoritative tickers** — no extras, none missing
+contain **exactly the 50 authoritative tickers** - no extras, none missing
 (verified by set comparison against the authoritative list).
 
 | List | Count | Status |
@@ -19,7 +19,7 @@ contain **exactly the 50 authoritative tickers** — no extras, none missing
 | Good | 40 | ✅ all present |
 | Bad | 10 | ✅ all present |
 | **Total** | **50** | ✅ exact match |
-| Benchmark `^NSEI` | — | ✅ in `data/nifty.json`, verified **+53.7%** |
+| Benchmark `^NSEI` | - | ✅ in `data/nifty.json`, verified **+53.7%** |
 
 ---
 
@@ -39,20 +39,20 @@ Orphan-reference sweep across `app/` and `lib/` (excluding the deferred
 `lib/companies.ts` write-ups): **no removed ticker is referenced anywhere** in
 app/data code. Specific fixes made so nothing pointed at a removed ticker:
 
-- `lib/calc.ts` — the simulator month-grid anchor `getSimPrices("TCS")` →
+- `lib/calc.ts` - the simulator month-grid anchor `getSimPrices("TCS")` →
   `getSimPrices("HDFCBANK")` (TCS was removed; this is a data reference, not
-  scoring logic — the rating bands in `ratingFromReturn` were left untouched).
-- `lib/scenarios.ts` — all five scenarios' `ideal` arrays rewrote to in-universe
+  scoring logic - the rating bands in `ratingFromReturn` were left untouched).
+- `lib/scenarios.ts` - all five scenarios' `ideal` arrays rewrote to in-universe
   Good-list tickers (they previously named TCS, ICICIBANK, POLYCAB, GHCL,
   FINOLEXIND, ABB, BHARTIARTL, TORNTPHARM, HINDUNILVR, ASIANPAINT, MARUTI,
   CONCOR, POWERGRID, NTPC, BAJAJAUTO). These arrays are reference-only and never
   rendered or scored.
-- `app/screener/page.tsx` — metadata title "35 NSE stocks" → "50 NSE stocks".
+- `app/screener/page.tsx` - metadata title "35 NSE stocks" → "50 NSE stocks".
 
 > Note: `lib/companies.ts` "About the company" write-ups still hold the old
 > names. Per the task scope, company write-ups are a **separate later phase** and
 > were intentionally NOT rebuilt here. The detail page guards the About section
-> (`getCompanyAbout(id) && …`), so the 34 new tickers simply omit that section —
+> (`getCompanyAbout(id) && …`), so the 34 new tickers simply omit that section -
 > no broken render. Stale write-ups for removed tickers are dead keys (never
 > referenced) and are harmless until that phase.
 
@@ -62,7 +62,7 @@ app/data code. Specific fixes made so nothing pointed at a removed ticker:
 
 The **entire dataset was rebuilt from the verified sources** (yfinance
 `auto_adjust=True` for split/bonus/dividend-correct prices; screener.in for
-FY2015–FY2021 fundamentals), so all 50 were regenerated. Of these:
+FY2015-FY2021 fundamentals), so all 50 were regenerated. Of these:
 
 - **34 net-new tickers** (not present in the app before): `AARTIIND, AAVAS,
   ADANIGREEN, AMBUJACEM, ASTRAL, AXISBANK, BAJAJFINSV, BIOCON, BPCL, CERA,
@@ -80,7 +80,7 @@ day). Monthly adjusted price series back to each stock's earliest listing.
 Market cap = true Jun-2021 value (split-adjusted price × post-Jun-2021 split
 factor × historical shares outstanding). **PAYTM** (IPO 18 Nov 2021) carries no
 Jun-2021 price: `price=null`, `ipoMonth="2021-11"`, and `effectiveEntry` = its
-first listed close (₹1,560.8) — the detail page and simulator handle this path.
+first listed close (₹1,560.8) - the detail page and simulator handle this path.
 
 ---
 
@@ -88,7 +88,7 @@ first listed close (₹1,560.8) — the detail page and simulator handle this pa
 
 The two simulator anchor months (`2021-06-01`, `2026-06-01`) in `prices.json` /
 `nifty.json` are pinned to the verified daily values so app-computed returns match
-the reference **exactly** (tolerance was ±2–3%; all are within 0.1 pt):
+the reference **exactly** (tolerance was ±2-3%; all are within 0.1 pt):
 
 | Ticker | Jun'21 | Jun'26 | Computed | Reference | ✓ |
 |---|---|---|---|---|---|
@@ -108,9 +108,9 @@ listing month). No gaps.
 
 ---
 
-## 5. Market-cap categories — match the mandate exactly
+## 5. Market-cap categories - match the mandate exactly
 
-Bands: Large > ₹20,000 Cr · Mid ₹5,000–20,000 Cr · Small < ₹5,000 Cr (Jun-2021).
+Bands: Large > ₹20,000 Cr · Mid ₹5,000-20,000 Cr · Small < ₹5,000 Cr (Jun-2021).
 
 | Bucket | Mandate | In data | ✓ |
 |---|---|---|---|
@@ -122,11 +122,11 @@ Bands: Large > ₹20,000 Cr · Mid ₹5,000–20,000 Cr · Small < ₹5,000 Cr (
 | Bad · Large (8) | all others | 8 | ✅ |
 
 Badge colours in `ScreenerGrid.tsx` / detail page: **Large = Blue, Mid = Purple,
-Small = Orange** (Micro = Red, unused — no stock is Micro). Unchanged and correct.
+Small = Orange** (Micro = Red, unused - no stock is Micro). Unchanged and correct.
 
 ---
 
-## 6. Peer groups — rebuilt to the Step-6 sector map
+## 6. Peer groups - rebuilt to the Step-6 sector map
 
 `lib/stocks.ts` `sector` fields drive peer grouping. Final groups (count):
 
@@ -162,12 +162,12 @@ The 8 single-member sectors are treated as standalone (`hasNoPeers`), each with 
   `snapshot-2021.json`); sort = market-cap desc; sector + cap filters use the new
   `SECTOR_ORDER`.
 - ✅ Cap badges (Blue/Purple/Orange) bind to `marketCapCategory` for all 50.
-- ✅ `generateStaticParams` built all 50 detail pages — confirmed in the build
+- ✅ `generateStaticParams` built all 50 detail pages - confirmed in the build
   output (`/screener/[ticker]` ● SSG, 50 paths).
 - ✅ FY2021 fundamental fields (ROE, D/E, Div Yield, OPM, Rev/Profit CAGR, EPS,
   CFO, P/E, Promoter) populate for all 50. **Bank D/E and OPM show n/a by
   design** (deposit-funded banks have no clean screener borrowings/margin line);
-  the detail page already documents this — banks render "N/A" with the existing
+  the detail page already documents this - banks render "N/A" with the existing
   footnote, and ITC promoter = 0% (no identifiable promoter), PAYTM ratios n/a
   (not listed in FY2021).
 - ✅ No orphaned/removed ticker appears anywhere in app/lib code.
@@ -176,11 +176,11 @@ The 8 single-member sectors are treated as standalone (`hasNoPeers`), each with 
 
 ## 8. Build & integrity
 
-- `npm run build` — **success**: compiled, TypeScript passed, 58/58 static pages
+- `npm run build` - **success**: compiled, TypeScript passed, 58/58 static pages
   generated (50 stock pages + home + screener + not-found + simulator + APIs).
 - `next build` is the gate and is green. (`npm run lint` reports 35 pre-existing
-  errors in chart components — `react-hooks/set-state-in-effect` in
-  `PriceChart`/`PerfChart` etc. — **none in any file changed by this task**; not
+  errors in chart components - `react-hooks/set-state-in-effect` in
+  `PriceChart`/`PerfChart` etc. - **none in any file changed by this task**; not
   introduced here, left for a dedicated lint pass.)
 - Data-file set comparison: all three files == the 50-ticker universe, exactly.
 

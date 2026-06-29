@@ -35,7 +35,7 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: Promise<{ ticker: string }> }) {
   return params.then(({ ticker }) => {
     const m = getStockMeta(ticker);
-    return { title: m ? `${m.name} — June 2021 time capsule` : "Stock" };
+    return { title: m ? `${m.name} - June 2021 time capsule` : "Stock" };
   });
 }
 
@@ -112,7 +112,7 @@ export default async function StockDetail({
   // precomputed in the snapshot.
   const epsNote =
     snap.epsConsistencyNote ??
-    "Not enough FY2015–FY2021 data to assess EPS consistency.";
+    "Not enough FY2015-FY2021 data to assess EPS consistency.";
 
   // EPS cells to flag red: years inside a run of >=3 consecutive YoY declines.
   const epsDeclineYears = (() => {
@@ -141,7 +141,7 @@ export default async function StockDetail({
     snap: getSnapshot(id)!,
   }));
 
-  const startYear = prices.length ? prices[0].date.slice(0, 4) : "—";
+  const startYear = prices.length ? prices[0].date.slice(0, 4) : "-";
 
   return (
     <>
@@ -186,7 +186,7 @@ export default async function StockDetail({
             <div className="text-right">
               {snap.ipoMonth ? (
                 <>
-                  <div className="tnum text-2xl font-bold text-gray-400">—</div>
+                  <div className="tnum text-2xl font-bold text-gray-400">-</div>
                   <div className="text-[11px] font-medium text-amber-700">
                     Not listed · IPO {monthLabel(snap.ipoMonth)}
                   </div>
@@ -274,7 +274,7 @@ export default async function StockDetail({
         <section id="chart" className="scroll-mt-28 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
           <div className="mb-1 flex items-baseline justify-between">
             <h2 className="text-lg font-semibold text-gray-900">
-              Price history · {startYear} – June 2021
+              Price history · {startYear} - June 2021
             </h2>
             <span className="text-xs text-gray-400">monthly close</span>
           </div>
@@ -288,7 +288,7 @@ export default async function StockDetail({
             <div className="grid h-72 place-items-center rounded-md bg-gray-50 text-center text-sm text-gray-500">
               <span>
                 Not listed as of June 2021
-                {snap.ipoMonth ? ` — IPO ${monthLabel(snap.ipoMonth)}` : ""}.
+                {snap.ipoMonth ? ` - IPO ${monthLabel(snap.ipoMonth)}` : ""}.
                 <br />
                 No pre-June-2021 price history to display.
               </span>
@@ -302,7 +302,7 @@ export default async function StockDetail({
             Profit &amp; Loss
           </h2>
           <p className="mb-3 text-xs text-gray-500">
-            Year-by-year, FY2015–FY2021 (₹ Crore). Any unavailable year shows as{" "}
+            Year-by-year, FY2015-FY2021 (₹ Crore). Any unavailable year shows as{" "}
             <span className="text-gray-400">n/a</span>.
           </p>
           <div className="overflow-x-auto thin-scroll">
@@ -382,7 +382,7 @@ export default async function StockDetail({
             Cash Flow from Operations
           </h2>
           <p className="mb-3 text-xs text-gray-500">
-            FY2015–FY2021 (₹ Crore). Negative operating cash flow is flagged in
+            FY2015-FY2021 (₹ Crore). Negative operating cash flow is flagged in
             red.
           </p>
           <div className="overflow-x-auto thin-scroll">

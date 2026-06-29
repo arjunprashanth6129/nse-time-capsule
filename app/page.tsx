@@ -4,7 +4,7 @@ import Reveal from "./components/Reveal";
 import CountUp from "./components/CountUp";
 
 export const metadata = {
-  title: `${PROJECT.name} — ${PROJECT.tagline}`,
+  title: `${PROJECT.name} - ${PROJECT.tagline}`,
 };
 
 /* ---------------- small presentational helpers ---------------- */
@@ -37,7 +37,7 @@ function FeatureCard({
   );
 }
 
-/* A lightweight, pure-CSS/SVG "product preview" — looks like the live app. */
+/* A lightweight, pure-CSS/SVG "product preview" - looks like the live app. */
 function AppMockup() {
   // three indexed performance lines (participant / ideal / nifty)
   const pts = (seed: number, end: number) => {
@@ -248,7 +248,7 @@ export default function Landing() {
               {
                 icon: "📊",
                 title: "50-Stock NSE Universe",
-                body: "Verified price history from Jan 2000, FY2015–FY2021 annual financials, and 10 fundamental metrics for every stock.",
+                body: "Verified price history from Jan 2000, FY2015-FY2021 annual financials, and 10 fundamental metrics for every stock.",
               },
               {
                 icon: "⏱️",
@@ -263,7 +263,7 @@ export default function Landing() {
               {
                 icon: "🧭",
                 title: "5 Investor Scenarios",
-                body: "Risk-matched ideal portfolios from Fresh Graduate to Retired Couple — each verified to beat the Nifty 50.",
+                body: "Risk-matched ideal portfolios from Fresh Graduate to Retired Couple - each verified to beat the Nifty 50.",
               },
             ].map((f, i) => (
               <Reveal key={f.title} delay={i * 90}>
@@ -281,7 +281,7 @@ export default function Landing() {
             </h2>
             <p className="mt-2 max-w-2xl text-slate-400">
               A Python data pipeline feeds a pre-computed static JSON layer that a
-              Next.js front end renders and scores — no runtime database, fully
+              Next.js front end renders and scores - no runtime database, fully
               reproducible.
             </p>
           </Reveal>
@@ -346,9 +346,9 @@ export default function Landing() {
                   </h2>
                   <p className="mt-3 max-w-2xl text-slate-300">
                     Every stock&apos;s return was independently recomputed from
-                    split/bonus-adjusted yfinance data — never copied from a
+                    split/bonus-adjusted yfinance data - never copied from a
                     third-party report. Fundamentals were scraped from
-                    screener.in (FY2015–FY2021), corporate actions like the Tata
+                    screener.in (FY2015-FY2021), corporate actions like the Tata
                     Motors demerger were handled explicitly, and the whole
                     dataset is pinned to a fixed June-2026 reference date so
                     results never drift.

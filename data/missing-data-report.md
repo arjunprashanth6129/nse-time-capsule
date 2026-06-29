@@ -14,7 +14,7 @@ GHCL was replaced by **FINEORG (Fine Organic Industries)** after evaluating all 
 | AAVAS | -46.5% | 12.0% | n/a | no (-CFO x4) | 4/7 | 39.1% | NBFC; fails CFO + return |
 | WONDERLA | +128% | n/a | n/a | - | 0 | 69.7% | FY2021 COVID loss; fails entry fundamentals |
 
-**FINEORG** is the only candidate that satisfies both *strong June-2021 fundamentals* (D/E 0.12, +CFO Rs134cr, 75% promoter, simple oleochemicals business, no corporate actions) *and* a return above the Nifty (+72.4% vs +53.2%). Its only gap: listed July 2018, so FY2015-FY2017 are null. (GARFIBRES — the top preference — has cleaner full history but +2.7% return makes it a poor example of a 'good pick that rewarded'.)
+**FINEORG** is the only candidate that satisfies both *strong June-2021 fundamentals* (D/E 0.12, +CFO Rs134cr, 75% promoter, simple oleochemicals business, no corporate actions) *and* a return above the Nifty (+72.4% vs +53.2%). Its only gap: listed July 2018, so FY2015-FY2017 are null. (GARFIBRES - the top preference - has cleaner full history but +2.7% return makes it a poor example of a 'good pick that rewarded'.)
 
 ## Coverage summary
 
@@ -25,7 +25,7 @@ GHCL was replaced by **FINEORG (Fine Organic Industries)** after evaluating all 
 - **GPM (gross profit margin):** NOT exposed by screener's summary P&L for any stock -> `gpm` is null for all 40; OPM% (operating margin) is captured instead as `opm`.
 - **Promoter holding:** screener's free shareholding table reaches ~FY2023, so the earliest available figure is shown as a labelled proxy (ZEEL's low promoter holding is real).
 
-**Null counts:** financials ~9 null cells (mostly FINEORG pre-2018 + gpm); snapshot 110 null fields (gpm x40 + loss-maker P/E + IDEA ROE/DE). No value is estimated or fabricated — gaps are null.
+**Null counts:** financials ~9 null cells (mostly FINEORG pre-2018 + gpm); snapshot 110 null fields (gpm x40 + loss-maker P/E + IDEA ROE/DE). No value is estimated or fabricated - gaps are null.
 
 ## Per-field gaps
 

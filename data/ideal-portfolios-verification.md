@@ -1,4 +1,4 @@
-# Ideal Portfolios — Verification
+# Ideal Portfolios - Verification
 
 Five portfolios built from the eligible pool, each with a distinct mandate. Every constituent individually beats Nifty, so each portfolio's blended return does too.
 

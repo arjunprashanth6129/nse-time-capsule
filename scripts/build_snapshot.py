@@ -1,7 +1,7 @@
 """Combine screener_raw.json + prices.json into the app's data files.
 
 Window anchored to JUNE 2021 (5-year exercise: June 2021 -> June 2026).
-Universe: definitive 40 stocks (GHCL replaced by FINEORG — see report).
+Universe: definitive 40 stocks (GHCL replaced by FINEORG - see report).
 
 Outputs (schema per the data-fetch spec):
   data/financials.json    id -> { "FY2015".."FY2021": {revenue,netProfit,eps,cfo} | null }
@@ -125,11 +125,11 @@ for sid, yahoo, name, sector in STOCKS:
     np_window = [npr.get(y) for y in SCR_YEARS[1:]]  # FY2016-FY2021
     eps_cagr5 = cagr(eps.get("2016"), eps.get("2021"), 5)
     if any(v is not None and v < 0 for v in np_window):
-        eps_note = "Inconsistent profitability — review year by year"
+        eps_note = "Inconsistent profitability - review year by year"
     elif eps_cagr5 is not None and pft5 is not None:
-        eps_note = ("EPS growth tracks profit growth — no significant dilution"
+        eps_note = ("EPS growth tracks profit growth - no significant dilution"
                     if eps_cagr5 >= pft5 - 2
-                    else "EPS growth lags profit growth — possible equity dilution")
+                    else "EPS growth lags profit growth - possible equity dilution")
     else:
         eps_note = None
         gaps.append((sid, "epsConsistencyNote", "FY2016-2021", "insufficient EPS/profit data"))
@@ -214,7 +214,7 @@ lines = [
     "**FINEORG** is the only candidate that satisfies both *strong June-2021 fundamentals* "
     "(D/E 0.12, +CFO Rs134cr, 75% promoter, simple oleochemicals business, no corporate "
     "actions) *and* a return above the Nifty (+72.4% vs +53.2%). Its only gap: listed "
-    "July 2018, so FY2015-FY2017 are null. (GARFIBRES — the top preference — has cleaner "
+    "July 2018, so FY2015-FY2017 are null. (GARFIBRES - the top preference - has cleaner "
     "full history but +2.7% return makes it a poor example of a 'good pick that rewarded'.)",
     "",
     "## Coverage summary",
@@ -235,7 +235,7 @@ lines = [
     "",
     f"**Null counts:** financials ~{null_count} null cells (mostly FINEORG pre-2018 + gpm); "
     f"snapshot {snap_nulls} null fields (gpm x40 + loss-maker P/E + IDEA ROE/DE). No value "
-    "is estimated or fabricated — gaps are null.",
+    "is estimated or fabricated - gaps are null.",
     "",
     "## Per-field gaps",
     "",

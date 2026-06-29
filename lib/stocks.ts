@@ -1,7 +1,7 @@
-// Canonical 50-stock universe — the final verified time-capsule list
+// Canonical 50-stock universe - the final verified time-capsule list
 // (40 "good fundamentals" + 10 deliberate weak picks, all NSE, June 2021).
 // `id` is the app ticker (JSON key + dropdown value); `sector` drives peers.
-// NOTE: the UI never flags a stock as "good" or "bad" — students must read the
+// NOTE: the UI never flags a stock as "good" or "bad" - students must read the
 // fundamentals themselves.
 
 export interface StockMeta {
@@ -131,13 +131,13 @@ export function hasNoPeers(id: string): boolean {
 
 // Custom note for standalone (single-member-sector) stocks.
 const PEER_NOTE: Record<string, string> = {
-  VBL: "No other listed beverages bottler in this universe — read Varun Beverages against the broader FMCG names for a consumer-staples reference.",
+  VBL: "No other listed beverages bottler in this universe - read Varun Beverages against the broader FMCG names for a consumer-staples reference.",
   TATAMOTORS:
-    "No other automaker in this list — Tata Motors is the only Auto-sector name in this universe.",
+    "No other automaker in this list - Tata Motors is the only Auto-sector name in this universe.",
   GARFIBRES:
-    "No direct technical-textiles peer in this list — compare against the broader industrials/building-materials names.",
+    "No direct technical-textiles peer in this list - compare against the broader industrials/building-materials names.",
   AARTIIND:
-    "No other specialty-chemicals name in this list — judge on its own FY2021 fundamentals.",
+    "No other specialty-chemicals name in this list - judge on its own FY2021 fundamentals.",
   RAJESHEXPO: "No other jewellery name in this list.",
   RELAXO: "No other footwear name in this list.",
   ZEEL: "No other media name in this list.",

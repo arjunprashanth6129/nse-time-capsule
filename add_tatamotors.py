@@ -117,7 +117,7 @@ pe=round(raw_2021/eps21,1) if (eps21 and eps21>0) else None
 mcap=round(raw_2021*SHARES_2021/1e7)
 cat="Large" if mcap>20000 else "Mid" if mcap>=5000 else "Small"
 cfo_neg=[f"FY{y}" for y in range(2015,2022) if (fin.get(f"FY{y}") and fin[f"FY{y}"]["cfo"] is not None and fin[f"FY{y}"]["cfo"]<0)]
-note = "FY2018 or FY2021 loss-making — EPS-vs-profit growth comparison not meaningful." if (np18 is None or np18<=0 or (np21 is not None and np21<0)) else "EPS broadly tracks net profit."
+note = "FY2018 or FY2021 loss-making - EPS-vs-profit growth comparison not meaningful." if (np18 is None or np18<=0 or (np21 is not None and np21<0)) else "EPS broadly tracks net profit."
 
 snap={
  "name":"Tata Motors",

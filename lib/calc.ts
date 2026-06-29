@@ -34,7 +34,7 @@ export interface HoldingResult {
   exitValue: number | null;
   stockReturn: number | null; // %
   weight: number | null; // % of entry portfolio value
-  fundamentalScore: number | null; // 0–10, per-stock June-2021 quality (filled by scoring)
+  fundamentalScore: number | null; // 0-10, per-stock June-2021 quality (filled by scoring)
 }
 
 export interface TimelinePoint {
@@ -52,14 +52,14 @@ export interface PortfolioResult {
   timeline: TimelinePoint[];
   // Scoring (filled by the server-side scoring layer; 0 in the bare base result).
   idealReturn: number; // scenario ideal-portfolio total return %
-  performanceScore: number; // 0–10 (participant return vs ideal portfolio)
-  fundamentalScore: number; // 0–10 (avg per-stock fundamental quality)
-  finalScore: number; // 0–10 = performance*0.5 + fundamental*0.5
+  performanceScore: number; // 0-10 (participant return vs ideal portfolio)
+  fundamentalScore: number; // 0-10 (avg per-stock fundamental quality)
+  finalScore: number; // 0-10 = performance*0.5 + fundamental*0.5
 }
 
-// Canonical monthly grid June 2021 – June 2026 (all stocks share it).
+// Canonical monthly grid June 2021 - June 2026 (all stocks share it).
 // Derived from the Nifty benchmark series, which is always present and is
-// never part of the tradeable universe — so the grid survives any stock
+// never part of the tradeable universe - so the grid survives any stock
 // add/removal (avoids the Phase-0 breakage when a referenced ticker like
 // TCS was removed). Verified identical to the per-stock monthly grid.
 function monthGrid(): string[] {

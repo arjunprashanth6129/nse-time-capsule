@@ -6,7 +6,7 @@ const inGroup2 = new Intl.NumberFormat("en-IN", {
   maximumFractionDigits: 2,
 });
 
-export const DASH = "—";
+export const DASH = "-";
 
 export function naDash<T>(v: T | null | undefined): boolean {
   return v === null || v === undefined || (typeof v === "number" && Number.isNaN(v));

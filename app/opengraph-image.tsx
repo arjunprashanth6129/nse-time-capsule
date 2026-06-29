@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { PROJECT } from "@/lib/stats";
 
-export const alt = `${PROJECT.name} — ${PROJECT.tagline}`;
+export const alt = `${PROJECT.name} - ${PROJECT.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 

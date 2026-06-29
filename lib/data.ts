@@ -1,12 +1,12 @@
 // Typed access to the static JSON data layer (all data: fixed window
-// Jan 2000 – June 2026, anchored to the reproducible June-2026 reference date).
+// Jan 2000 - June 2026, anchored to the reproducible June-2026 reference date).
 
 import pricesJson from "@/data/prices.json";
 import niftyJson from "@/data/nifty.json";
 import financialsJson from "@/data/financials.json";
 import snapshotJson from "@/data/snapshot-2021.json";
 
-export const ANCHOR_MONTH = "2021-06-01"; // June 2021 — the "time capsule" date
+export const ANCHOR_MONTH = "2021-06-01"; // June 2021 - the "time capsule" date
 export const END_MONTH = "2026-06-01"; // fixed reproducible end of window
 
 export interface PricePoint {
@@ -37,7 +37,7 @@ export interface Snapshot {
   debtToEquity: number | null;
   promoterHolding: number | null;
   promoterHoldingAsOf: string | null;
-  gpm: number | null; // gross margin — null (not exposed by screener); see opm
+  gpm: number | null; // gross margin - null (not exposed by screener); see opm
   opm: number | null;
   eps: number | null;
   revenueGrowth3yr: number | null; // FY2018→FY2021 CAGR %
@@ -74,12 +74,12 @@ export function getFullPrices(id: string): PricePoint[] {
   return prices[id] ?? [];
 }
 
-// Screener long-term chart: Jan 2000 – June 2021 (never shows beyond June 2021).
+// Screener long-term chart: Jan 2000 - June 2021 (never shows beyond June 2021).
 export function getScreenerPrices(id: string): PricePoint[] {
   return getFullPrices(id).filter((p) => p.date <= ANCHOR_MONTH);
 }
 
-// Simulator window: June 2021 – June 2026 (inclusive of both anchors).
+// Simulator window: June 2021 - June 2026 (inclusive of both anchors).
 export function getSimPrices(id: string): PricePoint[] {
   return getFullPrices(id).filter(
     (p) => p.date >= ANCHOR_MONTH && p.date <= END_MONTH,
@@ -95,8 +95,8 @@ export function priceAt(id: string, month: string): number | null {
   return p ? p.close : null;
 }
 
-// Entry = June-2021 close, or — for stocks that listed after the anchor
-// (PAYTM, IPO Nov 2021) — the first available close in the window, flagged
+// Entry = June-2021 close, or - for stocks that listed after the anchor
+// (PAYTM, IPO Nov 2021) - the first available close in the window, flagged
 // via Snapshot.ipoMonth / effectiveEntry.
 export function entryPrice(id: string): number | null {
   const at = priceAt(id, ANCHOR_MONTH);

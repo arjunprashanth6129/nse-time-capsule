@@ -3,7 +3,7 @@ export const PROJECT = {
   name: "MarketMind",
   tagline: "Financial Literacy Simulator",
   description:
-    "A full-stack backtesting simulator that teaches fundamental analysis through hands-on portfolio construction — built on verified NSE historical data.",
+    "A full-stack backtesting simulator that teaches fundamental analysis through hands-on portfolio construction - built on verified NSE historical data.",
   github: "https://github.com/arjunprashanth6129/nse-time-capsule",
   live: "https://nse-time-capsule.vercel.app",
   author: "Arjun",

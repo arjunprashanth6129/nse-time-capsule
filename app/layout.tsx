@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = `${PROJECT.name} — ${PROJECT.tagline}`;
+const title = `${PROJECT.name} - ${PROJECT.tagline}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(PROJECT.live),

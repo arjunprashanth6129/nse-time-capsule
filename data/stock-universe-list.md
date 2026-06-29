@@ -1,4 +1,4 @@
-# Stock Universe — All 50 Companies
+# Stock Universe - All 50 Companies
 
 40 "good fundamentals" candidates + 10 deliberate weak picks. NSE tickers, as of June 2021.
 

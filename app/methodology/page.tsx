@@ -4,7 +4,7 @@ import { PROJECT } from "@/lib/stats";
 export const metadata = {
   title: "Methodology",
   description:
-    "Data pipeline, scoring algorithm, and design decisions behind the MarketMind financial-literacy simulator.",
+    "How the data was built, how portfolios are scored, and the design decisions behind the MarketMind simulator.",
 };
 
 function Section({
@@ -57,147 +57,147 @@ export default function Methodology() {
       <main className="mx-auto max-w-3xl px-5 pb-20">
         <div className="py-8">
           <Link href="/" className="text-sm text-slate-400 hover:text-white">
-            ← Back to home
+            Back to home
           </Link>
           <h1 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
             Methodology
           </h1>
           <p className="mt-3 text-slate-400">
-            How the data was built, how portfolios are scored, and the design
-            decisions behind them. The goal throughout was reproducibility:
-            anyone re-running the pipeline should get the same numbers this app
-            shows.
+            How the data was built, how a portfolio gets scored, and why I made
+            the calls I did. The thread running through all of it is
+            reproducibility: re-run the pipeline and you should get the same
+            numbers this app shows.
           </p>
         </div>
 
-        <Section id="static" title="Why static JSON, not a live API or database">
+        <Section id="static" title="Why static JSON instead of a database">
           <p>
-            The dataset is <em>frozen</em>: the simulation window (June 2021 →
-            June 2026) and the June-2021 fundamentals never change. A live
-            database or third-party API at runtime would add latency, API-key
-            management, rate limits, and a source of non-determinism — with zero
-            benefit, because the numbers are fixed.
+            The dataset is frozen. The simulation window (June 2021 to June 2026)
+            and the June-2021 fundamentals are never going to change, so there's
+            nothing for a live database or third-party API to do at runtime
+            except add latency, an API key to manage, and a way for results to
+            quietly drift.
           </p>
           <p>
-            Instead, a Python pipeline fetches and verifies everything once and
-            writes pre-computed JSON (<code className="text-cyan-200">prices.json</code>,{" "}
+            So the Python pipeline fetches and verifies everything once, then
+            writes plain JSON (<code className="text-cyan-200">prices.json</code>,{" "}
             <code className="text-cyan-200">financials.json</code>,{" "}
             <code className="text-cyan-200">snapshot-2021.json</code>,{" "}
             <code className="text-cyan-200">ideal-portfolios.json</code>,{" "}
             <code className="text-cyan-200">nifty.json</code>). Next.js statically
-            generates all 50 stock pages from it. The result is fast, free to
-            host, and fully reproducible.
+            generates all 50 stock pages from those files. It's fast, costs
+            nothing to host, and anyone can reproduce it.
           </p>
         </Section>
 
-        <Section id="corporate-actions" title="Corporate actions: why auto_adjust=True matters">
+        <Section id="corporate-actions" title="Corporate actions, and why auto_adjust=True matters">
           <p>
-            Prices were fetched with yfinance using{" "}
+            Prices were pulled with yfinance using{" "}
             <code className="text-cyan-200">auto_adjust=True</code>, which
-            back-adjusts historical prices for stock <strong>splits and bonus
-            issues</strong>. Without it, a 1:1 bonus or a 5:1 split shows up as a
-            fake ~50–80% overnight crash, corrupting every return calculation.
+            back-adjusts old prices for stock splits and bonus issues. Skip it and
+            a 1:1 bonus or a 5:1 split looks like a 50 to 80% overnight crash,
+            which then poisons every return you calculate.
           </p>
           <p>
-            Splits alone aren&apos;t enough. <strong>Demergers</strong> are not
-            handled by auto-adjust: when Tata Motors split into its passenger-
-            and commercial-vehicle entities in 2025, the surviving ticker&apos;s
-            price dropped by the spun-off value. That return was reconstructed by
-            adding the demerged entity&apos;s value back, so a June-2021 holder&apos;s
-            true outcome is represented. Market caps use the real June-2021 price
-            × historical shares outstanding (split factor applied), not current
-            shares.
+            Splits are the easy case. Demergers aren't, and auto-adjust doesn't
+            touch them. When Tata Motors split into its passenger- and
+            commercial-vehicle businesses in 2025, the surviving ticker fell by
+            the value of the part that left. I reconstructed that by adding the
+            demerged entity's value back, so the figure reflects what someone who
+            held since June 2021 actually ended up with. Market caps use the real
+            June-2021 price times the shares outstanding back then, with the split
+            factor applied, not today's share count.
           </p>
         </Section>
 
-        <Section id="fundamentals" title="Fundamentals & the eligible-stock screen">
+        <Section id="fundamentals" title="Fundamentals and the eligible-stock screen">
           <p>
-            FY2015–FY2021 financials and June-2021 ratios were scraped from
-            screener.in with polite rate-limiting and on-disk caching, then
-            cross-checked. Ten metrics are stored per stock: ROE, Debt/Equity,
-            Dividend Yield, Operating Margin (a GPM proxy — screener does not
-            expose gross margin), Revenue &amp; Net-Profit 3-yr CAGR, EPS, CFO,
-            P/E and Promoter Holding.
+            FY2015 to FY2021 financials and the June-2021 ratios came from
+            screener.in, scraped politely (a 2-second gap between requests, with
+            everything cached to disk) and then cross-checked. Ten metrics are
+            stored per stock: ROE, Debt/Equity, Dividend Yield, Operating Margin
+            (a stand-in for gross margin, which screener doesn't expose), Revenue
+            and Net-Profit 3-year CAGR, EPS, CFO, P/E, and Promoter Holding.
           </p>
           <p>
-            A stock is eligible for an ideal portfolio only if it{" "}
-            <strong>beat the Nifty 50 (+{PROJECT.niftyReturn}%)</strong> and has
-            sound fundamentals — ROE ≥ 10% backed by a strong rest-of-profile
-            (positive cash flow, reasonable leverage, no loss years, no
-            governance flag). Bank/NBFC negative operating cash flow is treated
-            as structural loan-book growth, not distress.
+            A stock only makes it into an ideal portfolio if it beat the Nifty 50
+            (+{PROJECT.niftyReturn}%) and has fundamentals to back it up: ROE of at
+            least 10%, but only when the rest of the picture holds up too
+            (positive cash flow, sensible leverage, no loss years, no governance
+            flag). For a bank or NBFC, negative operating cash flow is normal when
+            the loan book is growing, so I treat that as expected rather than a
+            warning sign.
           </p>
         </Section>
 
         <Section id="scoring" title="The dual scoring system">
           <p>
-            A submitted portfolio is scored out of 10 as an equal blend of how it{" "}
-            <em>performed</em> and the <em>quality</em> of what was picked:
+            A submitted portfolio is scored out of 10 as an even split between how
+            it performed and how good the picks were:
           </p>
-          <Formula>{`Final = 0.5 × Performance  +  0.5 × Fundamentals`}</Formula>
+          <Formula>{`Final = 0.5 x Performance  +  0.5 x Fundamentals`}</Formula>
           <p>
-            <strong>Performance (0–10)</strong> compares the participant&apos;s
-            total return to that scenario&apos;s ideal-portfolio return (both
-            indexed to 100 at June 2021):
+            <strong>Performance (0-10)</strong> measures the participant's total
+            return against that scenario's ideal-portfolio return, both indexed to
+            100 at June 2021:
           </p>
           <Formula>{`relative = participant_return / ideal_return
-10 if relative ≥ 1.0   (capped — you can't beat "perfect")
- 9 if 0.90–0.99 ... down to 1 if 0–0.19
+10 if relative >= 1.0   (capped; you can't beat "perfect")
+ 9 if 0.90 to 0.99 ... down to 1 if 0 to 0.19
  0 if the portfolio lost money`}</Formula>
           <p>
-            Grading against the <em>ideal portfolio</em> rather than the Nifty
-            rewards getting close to the best achievable answer for that risk
-            profile, which is a fairer and more instructive target than a flat
-            index. The Nifty line still appears on the chart as a familiar
-            reference.
+            I grade against the ideal portfolio rather than the Nifty on purpose.
+            A flat index is the same target for everyone; the ideal portfolio is
+            the best sensible answer for that specific risk profile, which is a
+            fairer and more useful thing to aim at. The Nifty line still shows on
+            the chart as a familiar reference point.
           </p>
           <p>
-            <strong>Fundamentals (0–10)</strong> averages a per-stock rubric over
-            the chosen holdings:
+            <strong>Fundamentals (0-10)</strong> is the average of a per-stock
+            rubric across the holdings:
           </p>
-          <Formula>{`ROE        >25% = 3 | 15–25% = 2 | 5–15% = 1 | else 0
-D/E        <0.3 = 2 | 0.3–1.0 = 1 | >1.0 = 0   (banks/NBFC: 1 if ROE+CFO healthy)
+          <Formula>{`ROE        >25% = 3 | 15-25% = 2 | 5-15% = 1 | else 0
+D/E        <0.3 = 2 | 0.3-1.0 = 1 | >1.0 = 0   (banks/NBFC: 1 if ROE+CFO healthy)
 CFO        positive = 2 | negative = 0
 Consistency rev & profit CAGR positive + EPS tracks profit = 2 | partial 1 | 0
-Promoter   >50% = 1 | 25–50% = 0.5 | <25% / none = 0
-Any "bad-list" trap stock => 0 for that holding, regardless of metrics.`}</Formula>
+Promoter   >50% = 1 | 25-50% = 0.5 | <25% / none = 0
+A "trap" stock scores 0 here regardless of its metrics.`}</Formula>
           <p>
-            The <strong>50/50 weight</strong> is deliberate: rewarding returns
-            alone would let a lucky punt win, while rewarding fundamentals alone
-            would ignore the point of investing. Splitting them teaches that a
-            good process and a good outcome are different things — and that the
-            best portfolios score on both.
+            The 50/50 weighting is deliberate. Score on returns alone and a lucky
+            punt wins; score on fundamentals alone and you reward a good-looking
+            balance sheet even if the bet went nowhere. Splitting them is how you
+            teach that a good process and a good result are two different things,
+            and that the best portfolios manage both.
           </p>
         </Section>
 
-        <Section id="limitations" title="Limitations (stated honestly)">
+        <Section id="limitations" title="What it doesn't do">
           <ul className="list-disc space-y-2 pl-5 text-slate-300">
             <li>
-              Returns are <strong>price returns, not total returns</strong> —
-              dividends received are not reinvested into the performance figure
-              (dividend yield is shown separately as a fundamental).
+              Returns are price returns, not total returns. Dividends show up as a
+              fundamental metric but aren't reinvested into the performance number.
             </li>
             <li>
-              The universe is a curated 50 stocks (40 quality + 10 deliberate
-              weak picks), not the full market — it is a teaching set, not an
-              index.
+              The universe is a hand-picked 50 stocks (40 solid names plus 10
+              deliberate weak ones), so it's a teaching set, not an index.
             </li>
             <li>
-              Whole-share quantities and a fixed monthly price grid mean the
-              backtest is a close approximation, not a tick-level simulation.
+              Holdings are whole shares on a monthly price grid, which makes the
+              backtest a close approximation rather than a tick-by-tick model.
             </li>
             <li>
-              Ideal portfolios are one defensible construction per scenario, not
-              the unique mathematical optimum.
+              Each ideal portfolio is one reasonable construction for its
+              scenario, not a proven mathematical optimum.
             </li>
           </ul>
         </Section>
 
         <div className="border-t border-white/10 pt-8 text-sm text-slate-500">
-          Machine-readable project stats:{" "}
+          Machine-readable project stats live at{" "}
           <Link href="/api/stats" className="text-cyan-300 hover:text-cyan-200">
             /api/stats
           </Link>
+          .
         </div>
       </main>
     </div>

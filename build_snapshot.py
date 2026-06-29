@@ -55,15 +55,15 @@ def fy(t,y,k):
 def eps_note(t):
     np18=fy(t,2018,"netProfit"); np21=fy(t,2021,"netProfit")
     e18=fy(t,2018,"eps"); e21=fy(t,2021,"eps")
-    if e18 is None or e21 is None: return "EPS history unavailable for FY2018–FY2021 (recent listing or fiscal change)."
+    if e18 is None or e21 is None: return "EPS history unavailable for FY2018-FY2021 (recent listing or fiscal change)."
     if np18 is None or np18<=0 or (np21 is not None and np21<0):
-        return "FY2018 or FY2021 loss-making — EPS-vs-profit growth comparison not meaningful."
+        return "FY2018 or FY2021 loss-making - EPS-vs-profit growth comparison not meaningful."
     npc=cagr(np18,np21,3); epc=cagr(e18,e21,3)
     if npc is None or epc is None: return "Not enough data to assess EPS consistency."
     gap=npc-epc
-    if abs(gap)<2: return "EPS grew broadly in line with net profit — no material equity dilution."
-    if gap>0: return f"EPS CAGR {epc:.0f}% lags net-profit CAGR {npc:.0f}% — possible equity dilution."
-    return f"EPS CAGR {epc:.0f}% exceeds net-profit CAGR {npc:.0f}% — share count reduced (buyback)."
+    if abs(gap)<2: return "EPS grew broadly in line with net profit - no material equity dilution."
+    if gap>0: return f"EPS CAGR {epc:.0f}% lags net-profit CAGR {npc:.0f}% - possible equity dilution."
+    return f"EPS CAGR {epc:.0f}% exceeds net-profit CAGR {npc:.0f}% - share count reduced (buyback)."
 
 out={}
 for t in NAMES:

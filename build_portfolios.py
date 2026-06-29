@@ -62,19 +62,19 @@ for t in sorted(GOOD,key=lambda x:-elig[x]["ret"]):
 PORT={
  "fresh-graduate":("Fresh Graduate","Aggressive Growth",50000,
     ["VBL","COFORGE","BAJFINANCE","GRINDWELL","ZENSARTECH"],
-    "Built for maximum long-horizon growth and the highest risk budget. Anchored by VBL — a +454% beverages multibagger with 66% promoter holding and strong operating cash flow — alongside COFORGE (high-growth IT) and BAJFINANCE (India's premier consumer-finance NBFC, ~21% profit CAGR), with two quality mid-caps (GRINDWELL, ZENSARTECH) for additional beta. Highest expected return and volatility in the set; appropriate only where a multi-decade horizon can absorb drawdowns."),
+    "Built for maximum long-horizon growth and the highest risk budget. Anchored by VBL - a +454% beverages multibagger with 66% promoter holding and strong operating cash flow - alongside COFORGE (high-growth IT) and BAJFINANCE (India's premier consumer-finance NBFC, ~21% profit CAGR), with two quality mid-caps (GRINDWELL, ZENSARTECH) for additional beta. Highest expected return and volatility in the set; appropriate only where a multi-decade horizon can absorb drawdowns."),
  "newly-married":("Newly Married Couple","Diversified Growth",200000,
     ["BPCL","COFORGE","SUPREMEIND","SUNDARMFIN","DIVISLAB"],
-    "A five-sector growth book with no single-sector concentration — BPCL (energy), COFORGE (IT), SUPREMEIND (industrials/plastics), SUNDARMFIN (vehicle financing) and DIVISLAB (pharma APIs). Every holding cleared the quality screen (positive cash flow, sound balance sheet) and beats the index; diversification dampens single-name risk for a moderate-high profile."),
+    "A five-sector growth book with no single-sector concentration - BPCL (energy), COFORGE (IT), SUPREMEIND (industrials/plastics), SUNDARMFIN (vehicle financing) and DIVISLAB (pharma APIs). Every holding cleared the quality screen (positive cash flow, sound balance sheet) and beats the index; diversification dampens single-name risk for a moderate-high profile."),
  "young-family":("Young Family with Toddlers","Balanced Core-Satellite",300000,
     ["NESTLEIND","ITC","SUPREMEIND","GRINDWELL","DIVISLAB"],
     "A core-satellite construction: two low-volatility consumer-staples cores (NESTLEIND, ITC) for capital protection, plus three high-ROE growth satellites (SUPREMEIND, GRINDWELL, DIVISLAB) for compounding. Balances downside protection against growth for a moderate-risk family with a long but not unlimited horizon."),
  "pre-retirement":("Pre-Retirement Family","High-ROE Compounders",500000,
     ["NESTLEIND","MARICO","SUPREMEIND","ITC","COFORGE"],
-    "The portfolio's quality core — the highest-ROE, lowest-debt compounders: NESTLEIND (ROE ~103%), MARICO (37%), SUPREMEIND (31%), ITC (22%, debt-free) and COFORGE (19%). Prioritises return consistency and balance-sheet strength over yield, suited to capital preservation with continued growth in the final working years."),
+    "The portfolio's quality core - the highest-ROE, lowest-debt compounders: NESTLEIND (ROE ~103%), MARICO (37%), SUPREMEIND (31%), ITC (22%, debt-free) and COFORGE (19%). Prioritises return consistency and balance-sheet strength over yield, suited to capital preservation with continued growth in the final working years."),
  "elderly-retired":("Elderly Retired Couple","Dividend Income",100000,
     ["ITC","BPCL","TECHM","MARICO","NESTLEIND"],
-    "An income-and-stability mandate: the five highest-yield, lowest-volatility names — ITC (~10.7% trailing yield), BPCL (4.5%), TECHM (3.2%), MARICO (1.4%) and NESTLEIND (1.3%). Engineered for steady cash distributions and minimal drawdown for a corpus that must last."),
+    "An income-and-stability mandate: the five highest-yield, lowest-volatility names - ITC (~10.7% trailing yield), BPCL (4.5%), TECHM (3.2%), MARICO (1.4%) and NESTLEIND (1.3%). Engineered for steady cash distributions and minimal drawdown for a corpus that must last."),
 }
 grid=[x["date"] for x in p["NESTLEIND"] if A<=x["date"]<=E]
 def pmap(t): return {x["date"]:x["close"] for x in p[t]}

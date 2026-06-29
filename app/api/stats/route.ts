@@ -3,7 +3,7 @@ import nifty from "@/data/nifty.json";
 import ideal from "@/data/ideal-portfolios.json";
 import { PROJECT } from "@/lib/stats";
 
-// Public JSON stats endpoint — derives key figures live from the data layer.
+// Public JSON stats endpoint - derives key figures live from the data layer.
 export const dynamic = "force-static";
 
 export function GET() {

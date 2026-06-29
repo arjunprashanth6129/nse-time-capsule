@@ -1,4 +1,4 @@
-# Verification Report — June 2021 → June 2026
+# Verification Report - June 2021 → June 2026
 
 Definitive 40-stock universe (GHCL → **FINEORG**). Prices: split/bonus-adjusted monthly closes (yfinance). **Nifty 50 benchmark: +52.4%**. ★ = the 6 deliberate FA-trap stocks.
 
@@ -46,40 +46,40 @@ Definitive 40-stock universe (GHCL → **FINEORG**). Prices: split/bonus-adjuste
 | 38 | Infosys (INFY) | ₹1580.8 | ₹1038.7 | -34.3% | below |  |
 | 39 | Tata Consultancy Services (TCS) | ₹3345.75 | ₹2075.4 | -38.0% | below |  |
 | 40 | Zee Entertainment (ZEEL) | ₹214.75 | ₹116.65 | -45.7% | below | ★ |
-| — | **Nifty 50** | ₹15721.5 | ₹23961.55 | **+52.4%** | — | |
+| - | **Nifty 50** | ₹15721.5 | ₹23961.55 | **+52.4%** | - | |
 
-## 2. Strong-universe stocks (1–34, incl. FINEORG) that underperformed the Nifty
+## 2. Strong-universe stocks (1-34, incl. FINEORG) that underperformed the Nifty
 
-- ITC (ITC) — +48.4%
-- Britannia Industries (BRITANNIA) — +42.8%
-- Cipla (CIPLA) — +39.2%
-- Page Industries (PAGEIND) — +36.1%
-- Kotak Mahindra Bank (KOTAKBANK) — +17.2%
-- Dr. Reddy's Laboratories (DRREDDY) — +16.4%
-- HCL Technologies (HCLTECH) — +13.4%
-- HDFC Bank (HDFCBANK) — +4.1%
-- Finolex Industries (FINOLEXIND) — -4.5%
-- Asian Paints (ASIANPAINT) — -8.6%
-- Hindustan Unilever (HINDUNILVR) — -11.2%
-- VST Industries (VSTIND) — -21.1%
-- Container Corporation of India (CONCOR) — -32.5%
-- Infosys (INFY) — -34.3%
-- Tata Consultancy Services (TCS) — -38.0%
+- ITC (ITC) - +48.4%
+- Britannia Industries (BRITANNIA) - +42.8%
+- Cipla (CIPLA) - +39.2%
+- Page Industries (PAGEIND) - +36.1%
+- Kotak Mahindra Bank (KOTAKBANK) - +17.2%
+- Dr. Reddy's Laboratories (DRREDDY) - +16.4%
+- HCL Technologies (HCLTECH) - +13.4%
+- HDFC Bank (HDFCBANK) - +4.1%
+- Finolex Industries (FINOLEXIND) - -4.5%
+- Asian Paints (ASIANPAINT) - -8.6%
+- Hindustan Unilever (HINDUNILVR) - -11.2%
+- VST Industries (VSTIND) - -21.1%
+- Container Corporation of India (CONCOR) - -32.5%
+- Infosys (INFY) - -34.3%
+- Tata Consultancy Services (TCS) - -38.0%
 
-_15 of 34 "good" names lagged the index — bought at June-2021 (post-rally) valuations. Underperformance over one window does not invalidate the fundamentals; it is a teaching point._
+_15 of 34 "good" names lagged the index - bought at June-2021 (post-rally) valuations. Underperformance over one window does not invalidate the fundamentals; it is a teaching point._
 
-## 3. Trap stocks (35–40) with returns ABOVE the Nifty — instructor awareness
+## 3. Trap stocks (35-40) with returns ABOVE the Nifty - instructor awareness
 
-- ★ Coal India (COALINDIA) — +207.9% (rank 5/40)
-- ★ Indian Oil Corporation (IOC) — +100.4% (rank 13/40)
-- ★ Yes Bank (YESBANK) — +88.3% (rank 14/40)
-- ★ Tata Steel (TATASTEEL) — +69.4% (rank 17/40)
+- ★ Coal India (COALINDIA) - +207.9% (rank 5/40)
+- ★ Indian Oil Corporation (IOC) - +100.4% (rank 13/40)
+- ★ Yes Bank (YESBANK) - +88.3% (rank 14/40)
+- ★ Tata Steel (TATASTEEL) - +69.4% (rank 17/40)
 
-June 2021→2026 was a PSU/commodity/cyclical super-cycle, so several weak-FA names rallied. Their **June-2021 fundamentals were still poor** (negative net worth, NPAs, cyclical/flat earnings, low ROE, govt-controlled pricing), so they remain poor *picks* by the FA checklist — the price outcome is a macro tailwind, not a vindication.
+June 2021→2026 was a PSU/commodity/cyclical super-cycle, so several weak-FA names rallied. Their **June-2021 fundamentals were still poor** (negative net worth, NPAs, cyclical/flat earnings, low ROE, govt-controlled pricing), so they remain poor *picks* by the FA checklist - the price outcome is a macro tailwind, not a vindication.
 
 ## 4. Data coverage
 
-| Stock | Price pts (Jun21–Jun26) | Financial FY complete (/7) | Snapshot core fields (/10) |
+| Stock | Price pts (Jun21-Jun26) | Financial FY complete (/7) | Snapshot core fields (/10) |
 |---|---:|---:|---:|
 | TCS | 61 | 7 | 9 |
 | INFY | 61 | 7 | 9 |
@@ -126,9 +126,9 @@ _Snapshot core = price, marketCap, marketCapCategory, pe, dividendYield, roe, de
 
 ## 5. GHCL replacement confirmation
 
-**Chosen: FINEORG (Fine Organic Industries)** — Specialty Chemicals (oleochemicals), Mid-cap.
+**Chosen: FINEORG (Fine Organic Industries)** - Specialty Chemicals (oleochemicals), Mid-cap.
 
 - June-2021: price ₹2894.5, P/E 73.8, ROE 16.4%, D/E 0.12, promoter 75%, 5yr profit CAGR 9.6%.
 - Return June 2021→2026: **+83.4%** vs Nifty +52.4% → **beats** the benchmark.
-- Listed July 2018 → FY2015–FY2017 financials are null (documented in missing-data-report.md). Chosen over GARFIBRES (cleaner history but +2.7% return) and ELGIEQUIP (+190% but ROE 11.7%/D/E 0.53); AAVAS (−CFO) and WONDERLA (FY2021 COVID loss) failed the entry-fundamentals screen.
+- Listed July 2018 → FY2015-FY2017 financials are null (documented in missing-data-report.md). Chosen over GARFIBRES (cleaner history but +2.7% return) and ELGIEQUIP (+190% but ROE 11.7%/D/E 0.53); AAVAS (−CFO) and WONDERLA (FY2021 COVID loss) failed the entry-fundamentals screen.
 
