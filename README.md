@@ -133,7 +133,7 @@ the "answer key" never reaches the browser.
 This shipped as a live Financial Literacy Project session. Teams used the
 screener to research companies, built portfolios for an assigned investor
 persona, and I revealed their backtested results and scores live, so the lesson
-came from real outcomes instead of slides.
+came from real outcomes instead of just a theoretical presentation.
 
 ## Running it locally
 
